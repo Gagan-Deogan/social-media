@@ -1,12 +1,22 @@
-import React from "react";
+import "assests/css/index.css";
+import { Routes, Route } from "react-router-dom";
+import { Navbar } from "components/Navbar";
+import { Home } from "features/Home";
+import { Notifications } from "features/Notifications";
+import { Explore } from "features/Explore";
+import { Profile } from "features/Profile";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Hello</h1>
-      </header>
-    </div>
+    <main className="dis-grid main-layout">
+      <Navbar />
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </main>
   );
 }
 
