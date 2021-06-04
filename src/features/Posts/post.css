@@ -1,0 +1,16 @@
+.post-image-container {
+  position: relative;
+  padding-bottom: 54.25%;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.post-image-container > img {
+  inset: 0px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  width: 100%;
+}
