@@ -1,0 +1,24 @@
+.login-container {
+  max-width: unset;
+  height: 100vh;
+  object-fit: contain;
+}
+.login-container .responsive-img {
+  width: 50%;
+}
+
+@media (max-width: 600px) {
+  .login-container {
+    height: unset;
+    flex-direction: column-reverse;
+  }
+  .login-container .responsive-img {
+    height: 40vh;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+  }
+  .login-container > div {
+    margin-top: 3rem;
+  }
+}

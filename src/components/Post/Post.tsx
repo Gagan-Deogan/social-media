@@ -1,11 +1,11 @@
 import "./post.css";
-import { PostType } from "types/posts";
+import { Post as PostProps } from "types";
 import { Avatar } from "components/Avatar";
 import { LikedIcon, LikeIcon } from "assests/icons";
 import { useAppDispatch } from "app/hooks";
-import { likePost } from "./postsSlice";
+import { likePost } from "features/postsSlice";
 
-export const Post = ({ post }: { post: PostType }) => {
+export const Post = ({ post }: { post: PostProps }) => {
   const { _id, title, image, createBy, likes } = post;
   const dispatch = useAppDispatch();
   return (

@@ -1,4 +1,4 @@
-export type PostType = {
+export type Post = {
   _id: string;
   createBy: { name: string; userImage: string; username: string };
   likes: number;

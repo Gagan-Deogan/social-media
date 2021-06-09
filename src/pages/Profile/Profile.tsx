@@ -1,7 +1,6 @@
 import "./profile.css";
 import { Avatar } from "components/Avatar";
 import { NavLink } from "react-router-dom";
-import { Posts } from "features/Posts";
 export const Profile = () => {
   return (
     <>
@@ -46,9 +45,7 @@ export const Profile = () => {
             Following
           </NavLink>
         </div>
-        <div className="border-top margin-t-16">
-          <Posts />
-        </div>
+        <div className="border-top margin-t-16">{/* <Posts /> */}</div>
       </section>
     </>
   );

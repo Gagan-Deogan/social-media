@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { PostType } from "types/posts";
+import { Post } from "types";
 type initialState = {
-  posts: PostType[];
+  posts: Post[];
 };
 
 const initialState: initialState = {
@@ -52,4 +52,4 @@ export const postsSlice = createSlice({
 
 export const { likePost } = postsSlice.actions;
 
-export default postsSlice.reducer;
+export const postsReducer = postsSlice.reducer;

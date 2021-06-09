@@ -111,7 +111,11 @@ body::-webkit-scrollbar-thumb:hover {
   background: var(--red-dark);
 }
 /* end */
-
+.responsive-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
 .avatar-lg > img {
   width: 8rem;
   height: 8rem;

@@ -4,7 +4,7 @@ type UserType = {
   displayImage: string;
   Bio: string;
 };
-export type CurrentUserType = {
+export type CurrentUser = {
   email: string;
   name: string;
   username: string;

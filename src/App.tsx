@@ -1,22 +1,30 @@
 import "assests/css/index.css";
+import { useAppSelector } from "app/hooks";
 import { Routes, Route } from "react-router-dom";
 import { Navbar } from "components/Navbar";
-import { Home } from "features/Home";
-import { Notifications } from "features/Notifications";
-import { Explore } from "features/Explore";
-import { Profile } from "features/Profile";
-import { Login } from "features/Login";
+import { ProtectedRoute } from "components/ProtectedRoute";
+import { Home } from "pages/Home";
+import { Notifications } from "pages/Notifications";
+import { Explore } from "pages/Explore";
+import { Profile } from "pages/Profile";
+import { Signup } from "pages/Signup";
+import { Login } from "pages/Login";
 function App() {
+  const { currentUser } = useAppSelector((state) => state.users);
+
+  const mainLayout = currentUser ? "dis-grid loggedin-layout" : "";
+
   return (
     <>
-      <main className="dis-grid main-layout">
-        {/* <Navbar /> */}
+      <main className={mainLayout}>
+        {currentUser && <Navbar />}
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/notifications" element={<Notifications />} />
-          <Route path="/profile" element={<Profile />} />
+          <ProtectedRoute path="/home" element={<Home />} />
+          <ProtectedRoute path="/explore" element={<Explore />} />
+          <ProtectedRoute path="/notifications" element={<Notifications />} />
+          <ProtectedRoute path="/profile" element={<Profile />} />
+          <ProtectedRoute path="/signup" element={<Signup />} />
         </Routes>
       </main>
     </>
