@@ -1,6 +1,6 @@
 import "./login.css";
 import wall from "assests/images/wall.jpg";
-import { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "components/Input";
 import { useAppDispatch, useAppSelector } from "app/hooks";
@@ -10,7 +10,7 @@ import { loginUser } from "features/userSlice/userSlice";
 import { initialState, reducer } from "./reducer";
 export const Login = () => {
   const navigate = useNavigate();
-  const currentUser = useAppSelector((state) => state.users.currentUser);
+  const { currentUser, status } = useAppSelector((state) => state.users);
   const appDispatch = useAppDispatch();
   const [{ email, password }, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
@@ -18,20 +18,29 @@ export const Login = () => {
       navigate("/home");
     }
   }, [currentUser, navigate]);
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    appDispatch(loginUser({ email, password }));
+  };
+
   return (
     <>
       <section className="w12 sm-column row login-container">
         <img src={wall} alt="" className="responsive-img" />
         <div className="column sm-w12 w7 align-start sm-justify-start justify-center padding-l-32">
           <h1 className="bold ">Login to Greenify</h1>
-          <form action="#" className="sm-w10 md-w10 w6 margin-t-16">
+          <form
+            action="#"
+            className="sm-w10 md-w10 w6 margin-t-16"
+            onSubmit={handleFormSubmit}>
             <section className="column margin-b-16">
-              <label htmlFor="email" className="margin-b-8 ">
+              <label htmlFor="current-email" className="margin-b-8 ">
                 Email
               </label>
               <Input
                 name="current-email"
-                type="text"
+                type="email"
                 value={email}
                 required
                 onChange={(e) =>
@@ -53,11 +62,9 @@ export const Login = () => {
                 />
               </div>
             </section>
-            <Button
-              className="btn-pry-fil w12"
-              onClick={() => appDispatch(loginUser({ email, password }))}>
+            <button className="btn-pry-fil w12" disabled={status === "PENDING"}>
               Login
-            </Button>
+            </button>
           </form>
           <Link className="font-xs margin-t-16 bold" to="/signup">
             Don't have an account?

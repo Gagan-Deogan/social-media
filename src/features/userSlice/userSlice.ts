@@ -1,24 +1,11 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { CurrentUser } from "types/user";
-type InitialState = {
-  currentUser: CurrentUser | null;
-  token: string | null;
-  status: "FULFILLED" | "ERROR" | "PENDING" | "IDLE";
-  error: string | null;
-};
-type FetchError = {
-  error: string;
-};
-type response = {
-  currentUser: CurrentUser;
-  token: string;
-};
+import { InitialState, response, FetchError } from "./types";
 
 const initialState: InitialState = {
   currentUser: null,
   status: "IDLE",
-  token: null,
+  token: localStorage?.getItem("token"),
   error: "",
 };
 
@@ -31,6 +18,22 @@ export const loginUser = createAsyncThunk<
     email,
     password,
   });
+
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      error: "Failed to fetch todos.",
+    });
+  }
+  const data: response = response.data.data;
+  return data;
+});
+
+export const initializeUser = createAsyncThunk<
+  response,
+  undefined,
+  { rejectValue: FetchError }
+>("user/InitialUser", async (undefined, thunkApi) => {
+  const response = await axios.get("http://localhost:8080/users/self");
 
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
@@ -64,6 +67,20 @@ export const userSlice = createSlice({
     });
     builder.addCase(loginUser.rejected, (state, { payload }) => {
       if (payload) state.error = payload.error;
+      state.status = "IDLE";
+    });
+
+    builder.addCase(initializeUser.pending, (state) => {
+      state.status = "PENDING";
+    });
+    builder.addCase(initializeUser.fulfilled, (state, { payload }) => {
+      state.currentUser = payload.currentUser;
+      state.status = "FULFILLED";
+    });
+    builder.addCase(initializeUser.rejected, (state, { payload }) => {
+      if (payload) {
+        state.error = payload.error;
+      }
       state.status = "IDLE";
     });
   },

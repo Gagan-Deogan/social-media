@@ -7,7 +7,7 @@ import { likePost } from "features/postsSlice";
 
 export const Post = ({ post }: { post: PostProps }) => {
   const { _id, title, image, createBy, likes } = post;
-  const dispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
   return (
     <article className="column align-start border bor-rad-8 padding-16 margin-16">
       <div className="row align-center cursor-pointer">
@@ -26,7 +26,7 @@ export const Post = ({ post }: { post: PostProps }) => {
       </div>
       <button
         className="btn-link border-rounded pink-color"
-        onClick={() => dispatch(likePost({ postId: _id }))}>
+        onClick={() => appDispatch(likePost({ postId: _id }))}>
         <LikeIcon />
         {/* <LikedIcon />  */}
         <span>{likes}</span>

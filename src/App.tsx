@@ -1,34 +1,36 @@
 import "assests/css/index.css";
-import { useAppSelector } from "app/hooks";
-import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { useAppSelector, useAppDispatch } from "app/hooks";
+import { setupAuthHeader } from "utils";
 import { Navbar } from "components/Navbar";
-import { ProtectedRoute } from "components/ProtectedRoute";
-import { Home } from "pages/Home";
-import { Notifications } from "pages/Notifications";
-import { Explore } from "pages/Explore";
-import { Profile } from "pages/Profile";
-import { Signup } from "pages/Signup";
-import { Login } from "pages/Login";
-function App() {
-  const { currentUser } = useAppSelector((state) => state.users);
+import { Snakbar } from "components/Snakbar";
+import { Interceptor } from "components/Interceptor";
+import { Navigation } from "components/Navigation";
+import { initializeUser } from "features/userSlice";
+const App = () => {
+  const { currentUser, token } = useAppSelector((state) => state.users);
+  const { isShow } = useAppSelector((state) => state.snakbar);
+  const appDispatch = useAppDispatch();
+  setupAuthHeader(token);
 
   const mainLayout = currentUser ? "dis-grid loggedin-layout" : "";
 
+  useEffect(() => {
+    if (token) {
+      appDispatch(initializeUser());
+    }
+  }, []);
+
   return (
     <>
+      <Interceptor />
+      {isShow && <Snakbar />}
       <main className={mainLayout}>
         {currentUser && <Navbar />}
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <ProtectedRoute path="/home" element={<Home />} />
-          <ProtectedRoute path="/explore" element={<Explore />} />
-          <ProtectedRoute path="/notifications" element={<Notifications />} />
-          <ProtectedRoute path="/profile" element={<Profile />} />
-          <ProtectedRoute path="/signup" element={<Signup />} />
-        </Routes>
+        <Navigation />
       </main>
     </>
   );
-}
+};
 
 export default App;
