@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { InitialState, response, FetchError } from "./types";
-
+import { InitialState, res } from "./types";
+import { FetchError } from "types";
 const initialState: InitialState = {
   currentUser: null,
   status: "IDLE",
@@ -10,37 +10,37 @@ const initialState: InitialState = {
 };
 
 export const loginUser = createAsyncThunk<
-  response,
+  res,
   { email: string; password: string },
   { rejectValue: FetchError }
 >("user/loginUser", async ({ email, password }, thunkApi) => {
-  const response = await axios.post("http://localhost:8080/users/login", {
+  const res = await axios.post("http://localhost:8080/users/login", {
     email,
     password,
   });
 
-  if (response.status !== 200) {
+  if (res.status !== 200) {
     return thunkApi.rejectWithValue({
-      error: "Failed to fetch todos.",
+      error: "Failed",
     });
   }
-  const data: response = response.data.data;
+  const data: res = res.data.data;
   return data;
 });
 
 export const initializeUser = createAsyncThunk<
-  response,
+  res,
   undefined,
   { rejectValue: FetchError }
->("user/InitialUser", async (undefined, thunkApi) => {
-  const response = await axios.get("http://localhost:8080/users/self");
+>("user/InitialUser", async (_, thunkApi) => {
+  const res = await axios.get("http://localhost:8080/users/self");
 
-  if (response.status !== 200) {
+  if (res.status !== 200) {
     return thunkApi.rejectWithValue({
-      error: "Failed to fetch todos.",
+      error: "Failed",
     });
   }
-  const data: response = response.data.data;
+  const data: res = res.data.data;
   return data;
 });
 

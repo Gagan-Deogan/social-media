@@ -5,10 +5,8 @@ export type InitialState = {
   status: "FULFILLED" | "ERROR" | "PENDING" | "IDLE";
   error: string | null;
 };
-export type FetchError = {
-  error: string;
-};
-export type response = {
+
+export type res = {
   currentUser: CurrentUser;
   token: string;
 };

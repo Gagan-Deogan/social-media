@@ -1,1 +1,1 @@
-export { postsReducer, likePost } from "./postsSlice";
+export { postsReducer, likePost, fetchPosts } from "./postsSlice";

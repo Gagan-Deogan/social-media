@@ -14,6 +14,11 @@ export const Interceptor = () => {
   const addErrorInterceptor = () => {
     const errorInterceptor = axios.interceptors.response.use(
       (res) => {
+        if (res.status === 201) {
+          appDispatch(
+            showSnakbar({ type: "SUCCESS", message: "Successfully created" })
+          );
+        }
         return res;
       },
       (error) => {
@@ -26,6 +31,10 @@ export const Interceptor = () => {
           if (status === 422) {
             appDispatch(
               showSnakbar({ type: "ALERT", message: error.response.data.data })
+            );
+          } else {
+            appDispatch(
+              showSnakbar({ type: "ALERT", message: "Something went wrong." })
             );
           }
         }

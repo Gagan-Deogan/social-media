@@ -1,7 +1,7 @@
 import "assests/css/index.css";
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "app/hooks";
-import { setupAuthHeader } from "utils";
+import { setupDefaultsHeader } from "utils";
 import { Navbar } from "components/Navbar";
 import { Snakbar } from "components/Snakbar";
 import { Interceptor } from "components/Interceptor";
@@ -11,7 +11,7 @@ const App = () => {
   const { currentUser, token } = useAppSelector((state) => state.users);
   const { isShow } = useAppSelector((state) => state.snakbar);
   const appDispatch = useAppDispatch();
-  setupAuthHeader(token);
+  setupDefaultsHeader(token);
 
   const mainLayout = currentUser ? "dis-grid loggedin-layout" : "";
 

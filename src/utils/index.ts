@@ -1,1 +1,2 @@
-export { setupAuthHeader } from "./setupAuthHeader";
+export { setupDefaultsHeader } from "./setupAuthHeader";
+export { uuid } from "./uuid";
