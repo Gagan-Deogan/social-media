@@ -4,11 +4,19 @@ import { Avatar } from "components/Avatar";
 import { LikedIcon, LikeIcon } from "assests/icons";
 import { useAppDispatch } from "app/hooks";
 import { likePost } from "features/postsSlice";
+import { updatePostLike } from "services/index";
+import { Button } from "components/Button";
 
 export const Post = ({ post }: { post: PostProps }) => {
-  const { _id, title, imageURL, createdBy, likes } = post;
-  console.log(likes);
+  const { _id, title, imageURL, createdBy, likes, currentUserLike } = post;
   const appDispatch = useAppDispatch();
+  const likeToogle = () => {
+    appDispatch(likePost({ postId: _id }));
+  };
+  const handleLike = () => {
+    likeToogle();
+    updatePostLike({ postId: _id, likeToogle });
+  };
   return (
     <article className="column align-start border bor-rad-8 padding-16 margin-16">
       <div className="row align-center cursor-pointer">
@@ -25,9 +33,9 @@ export const Post = ({ post }: { post: PostProps }) => {
       <div className="row align-center">
         <button
           className="btn-link border-rounded pink-color"
-          onClick={() => appDispatch(likePost({ postId: _id }))}>
-          <LikeIcon />
-          {/* <LikedIcon />  */}
+          onClick={handleLike}>
+          {!currentUserLike && <LikeIcon />}
+          {currentUserLike && <LikedIcon />}
         </button>
         <button className="btn-link">
           <h5 className="bold">{likes}</h5>

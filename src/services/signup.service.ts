@@ -6,7 +6,7 @@ type handleSignupProps = {
   password: string;
   navigate: Function;
 };
-type Response = {
+type SignUpResponse = {
   success: boolean;
   data: string;
 };
@@ -17,14 +17,13 @@ export const handleSignup = async ({
   password,
   navigate,
 }: handleSignupProps) => {
-  const res = await axios.post("http://localhost:8080/users/signup", {
+  const res: SignUpResponse = await axios.post("/users/signup", {
     email,
     fullname,
     username,
     password,
   });
-  const data: Response = res.data;
-  if (data.success) {
+  if (res.success) {
     navigate("/");
   }
   return Promise.resolve();

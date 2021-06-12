@@ -5,6 +5,3 @@ export type InitialState = {
   status: "IDLE" | "PENDING" | "ERROR" | "FULFILLED";
   error: string;
 };
-export type res = {
-  data: Post[];
-};

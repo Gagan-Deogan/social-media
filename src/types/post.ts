@@ -11,4 +11,5 @@ export type Post = {
   likes: number;
   imageURL?: string;
   title?: string;
+  currentUserLike: boolean;
 };

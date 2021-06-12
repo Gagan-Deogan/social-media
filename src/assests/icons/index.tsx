@@ -16,7 +16,7 @@ export const SeacrhIcon = () => {
   );
 };
 
-export const LikedIcon = () => {
+export const LikeIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,7 @@ export const LikedIcon = () => {
   );
 };
 
-export const LikeIcon = () => {
+export const LikedIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -10,11 +10,11 @@ export const Navigation = () => {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
       <ProtectedRoute path="/home" element={<Home />} />
       <ProtectedRoute path="/explore" element={<Explore />} />
       <ProtectedRoute path="/notifications" element={<Notifications />} />
       <ProtectedRoute path="/profile" element={<Profile />} />
-      <ProtectedRoute path="/signup" element={<Signup />} />
     </Routes>
   );
 };

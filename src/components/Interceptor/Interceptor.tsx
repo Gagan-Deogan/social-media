@@ -19,7 +19,7 @@ export const Interceptor = () => {
             showSnakbar({ type: "SUCCESS", message: "Successfully created" })
           );
         }
-        return res;
+        return res.data;
       },
       (error) => {
         if (error.response) {

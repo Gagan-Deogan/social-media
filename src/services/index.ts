@@ -1,2 +1,2 @@
 export { handleSignup } from "./signup.service";
-export { createPost } from "./createPost.service";
+export { createPost, updatePostLike } from "./post.service";

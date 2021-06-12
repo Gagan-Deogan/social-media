@@ -1,14 +1,17 @@
 import { useRef, useState, useEffect } from "react";
+import { Post } from "types";
 import { ImageIcon, SendIcon } from "assests/icons";
 import { Avatar } from "components/Avatar";
 import { createPost } from "services";
+import { useAppDispatch } from "app/hooks";
+import { addNewPost } from "features/postsSlice";
 export const Compose = () => {
   const ref = useRef<HTMLTextAreaElement>(null);
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const imagePreview = useRef<any>();
   const [title, setTitle] = useState<string>();
   const [selectedImage, setSelectedImage] = useState();
-
+  const appDispatch = useAppDispatch();
   const handleBrowerOpen = () => {
     if (hiddenFileInput.current) {
       hiddenFileInput.current.click();
@@ -23,9 +26,17 @@ export const Compose = () => {
     }
   };
 
+  const onCretePostComplete = (post: Post | undefined) => {
+    if (post) {
+      setSelectedImage(undefined);
+      setTitle("");
+      appDispatch(addNewPost(post));
+    }
+  };
+
   const handelUpload = () => {
     if (title || selectedImage) {
-      createPost({ selectedImage, title });
+      createPost({ selectedImage, title, onCretePostComplete });
     }
   };
 

@@ -1,6 +1,8 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { InitialState, res } from "./types";
+import { CurrentUser } from "types/user";
+
 import { FetchError } from "types";
 const initialState: InitialState = {
   currentUser: null,
@@ -14,18 +16,21 @@ export const loginUser = createAsyncThunk<
   { email: string; password: string },
   { rejectValue: FetchError }
 >("user/loginUser", async ({ email, password }, thunkApi) => {
-  const res = await axios.post("http://localhost:8080/users/login", {
-    email,
-    password,
-  });
+  const res: { success: boolean; data: res } = await axios.post(
+    "/users/login",
+    {
+      email,
+      password,
+    }
+  );
 
-  if (res.status !== 200) {
-    return thunkApi.rejectWithValue({
-      error: "Failed",
-    });
+  if (res.success) {
+    const data: res = res.data;
+    return data;
   }
-  const data: res = res.data.data;
-  return data;
+  return thunkApi.rejectWithValue({
+    error: "Failed",
+  });
 });
 
 export const initializeUser = createAsyncThunk<
@@ -33,15 +38,15 @@ export const initializeUser = createAsyncThunk<
   undefined,
   { rejectValue: FetchError }
 >("user/InitialUser", async (_, thunkApi) => {
-  const res = await axios.get("http://localhost:8080/users/self");
+  const res: { success: boolean; data: res } = await axios.get("/users/self");
 
-  if (res.status !== 200) {
-    return thunkApi.rejectWithValue({
-      error: "Failed",
-    });
+  if (res.success) {
+    const data: res = res.data;
+    return data;
   }
-  const data: res = res.data.data;
-  return data;
+  return thunkApi.rejectWithValue({
+    error: "Failed",
+  });
 });
 
 export const userSlice = createSlice({
