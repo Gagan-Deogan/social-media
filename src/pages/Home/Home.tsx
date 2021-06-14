@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppSelector } from "app/hooks";
-import { Post } from "components/Post";
+import { PostCard } from "components/PostCard";
 import { Compose } from "components/Compose";
 import { useAppDispatch } from "app/hooks";
 import { fetchPosts } from "features/postsSlice";
@@ -20,7 +20,7 @@ export const Home = () => {
         </div>
         <Compose />
         {posts.map((post) => (
-          <Post key={post._id} post={post} />
+          <PostCard key={post._id} post={post} />
         ))}
       </section>
     </>

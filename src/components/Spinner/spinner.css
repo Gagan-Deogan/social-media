@@ -1,6 +1,6 @@
 .spinner {
-  min-width: 1.5rem;
-  min-height: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border: 0.2rem solid var(--primary-dark);
   border-right: 0.2rem solid #fff;
   border-radius: 50%;

@@ -1,12 +1,12 @@
-import { CurrentUser } from "types/user";
+import { UserProfile } from "types/user";
 export type InitialState = {
-  currentUser: CurrentUser | null;
+  currentUser: UserProfile | null;
   token: string | null;
   status: "FULFILLED" | "ERROR" | "PENDING" | "IDLE";
   error: string | null;
 };
 
 export type res = {
-  currentUser: CurrentUser;
+  currentUser: UserProfile;
   token: string;
 };

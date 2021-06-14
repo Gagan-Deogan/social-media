@@ -198,3 +198,12 @@ textarea:focus {
 .dis-hide {
   display: none;
 }
+.bg-grey {
+  background-color: var(--grey-light);
+}
+.bg-grey-dark {
+  background-color: var(--grey-dark);
+}
+.avatar-border img {
+  border: 0.25rem solid var(--background);
+}

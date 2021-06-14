@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { InitialState, res } from "./types";
-import { CurrentUser } from "types/user";
+import { UserProfile } from "types/user";
 
 import { FetchError } from "types";
 const initialState: InitialState = {
@@ -86,7 +86,6 @@ export const userSlice = createSlice({
       if (payload) {
         state.error = payload.error;
       }
-      state.status = "IDLE";
     });
   },
 });

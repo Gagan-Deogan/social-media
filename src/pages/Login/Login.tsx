@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Input } from "components/Input";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { PasswordInput } from "components/PasswordInput";
-import { Button } from "components/Button";
 import { loginUser } from "features/userSlice/userSlice";
 import { initialState, reducer } from "./reducer";
 export const Login = () => {

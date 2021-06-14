@@ -1,14 +1,16 @@
 import { UserIcon, HomeIcon, SeacrhIcon, BellIcon } from "assests/icons";
 import { NavLink } from "react-router-dom";
 import { Hidden } from "components/Hidden";
+import { useAppSelector } from "app/hooks";
 
 const navOptions = {
   Home: { link: "home", icon: <HomeIcon /> },
   Explore: { link: "explore", icon: <SeacrhIcon /> },
   Notifications: { link: "notifications", icon: <BellIcon /> },
-  Profile: { link: "profile", icon: <UserIcon /> },
 };
 export const Navbar = (): JSX.Element => {
+  const { currentUser } = useAppSelector((state) => state.users);
+
   return (
     <>
       <Hidden hideAt="sm-down">
@@ -23,6 +25,13 @@ export const Navbar = (): JSX.Element => {
                 <span className="margin-l-8 bold">{key}</span>
               </NavLink>
             ))}
+            <NavLink
+              className="btn-link margin-t-16 border-rounded"
+              to={`/${currentUser?.username}`}
+              key={"Profile"}>
+              <UserIcon />
+              <span className="margin-l-8 bold">{"Profile"}</span>
+            </NavLink>
           </nav>
         </aside>
       </Hidden>

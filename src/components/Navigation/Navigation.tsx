@@ -15,6 +15,7 @@ export const Navigation = () => {
       <ProtectedRoute path="/explore" element={<Explore />} />
       <ProtectedRoute path="/notifications" element={<Notifications />} />
       <ProtectedRoute path="/profile" element={<Profile />} />
+      <ProtectedRoute path="/:username" element={<Profile />} />
     </Routes>
   );
 };

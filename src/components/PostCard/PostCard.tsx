@@ -7,7 +7,7 @@ import { likePost } from "features/postsSlice";
 import { updatePostLike } from "services/index";
 import { Button } from "components/Button";
 
-export const Post = ({ post }: { post: PostProps }) => {
+export const PostCard = ({ post }: { post: PostProps }) => {
   const { _id, title, imageURL, createdBy, likes, currentUserLike } = post;
   const appDispatch = useAppDispatch();
   const likeToogle = () => {
@@ -27,8 +27,8 @@ export const Post = ({ post }: { post: PostProps }) => {
         </div>
       </div>
       <p>{title}</p>
-      <div className="post-image-container w12 bor-rad-8 margin-t-8 margin-b-8">
-        <img className="bor-rad-12" src={imageURL} alt="post" />
+      <div className="post-image-container w12 bor-rad-8 margin-t-8 margin-b-8 bor-rad-12">
+        <img src={imageURL} alt="post" />
       </div>
       <div className="row align-center">
         <button

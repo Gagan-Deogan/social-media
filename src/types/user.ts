@@ -1,16 +1,19 @@
+import { Post } from "./post";
+
 type UserType = {
-  name: string;
+  fullname: string;
   username: string;
   imageURL: string;
   Bio: string;
 };
-export type CurrentUser = {
+export type UserProfile = {
   email: string;
-  name: string;
+  fullname: string;
   username: string;
   imageURL: string;
   headerImage: string;
-  Bio: string;
+  bio: string;
   following: UserType[];
   followers: UserType[];
+  posts: Post[];
 };
