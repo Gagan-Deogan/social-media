@@ -5,6 +5,7 @@
   border-right: 0.2rem solid #fff;
   border-radius: 50%;
   animation: spinner 1s linear infinite;
+  margin: 15rem auto;
 }
 
 @keyframes spinner {

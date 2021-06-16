@@ -1,26 +1,39 @@
 import "./profile.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { getProfileByUsername, setStatusIdle } from "features/profilesSlice";
+import {
+  getProfileByUsername,
+  setStatusIdle,
+  setStatusFulfilled,
+} from "features/profilesSlice";
 import { Spinner } from "components/Spinner";
-import { Post, UserProfile } from "types";
-import { PostCard } from "components/PostCard";
 import { UserDetails } from "components/UserDetails";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 
 export const Profile = (): JSX.Element => {
   const { pathname } = useLocation();
   const username = pathname.slice(1);
-  const { profiles, status, error } = useAppSelector((state) => state.profiles);
+
+  const { profiles, status } = useAppSelector((state) => state.profiles);
   const appDispatch = useAppDispatch();
+
   useEffect(() => {
     (async () => {
-      if (status === "IDLE") {
+      if (status === "IDLE" && !(username in profiles)) {
         appDispatch(getProfileByUsername({ username: pathname }));
       }
+      if (status === "IDLE" && username in profiles) {
+        appDispatch(setStatusFulfilled());
+      }
     })();
-  }, [pathname, status]);
-  console.log();
+  }, [pathname, status, appDispatch, profiles, username]);
+
+  useEffect(() => {
+    return () => {
+      appDispatch(setStatusIdle());
+    };
+  }, []);
+
   return (
     <>
       <section className="border-right">
@@ -32,8 +45,8 @@ export const Profile = (): JSX.Element => {
           <UserDetails userProfile={profiles[username]} />
         )}
         {status === "ERROR" && (
-          <div>
-            <h2>This account doesn’t exist</h2>
+          <div className="row justify-center">
+            <h2 className="margin-t-64">This account doesn’t exist</h2>
           </div>
         )}
       </section>

@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { UserProfile, ProfilesInitialState } from "./profileSlice.types";
+import { UserProfile, ProfilesInitialState } from "./profilesSlice.types";
 import { FetchError } from "types";
 const initialState: ProfilesInitialState = {
   profiles: {},
@@ -32,6 +32,22 @@ const profilesSlice = createSlice({
     setStatusIdle: (state) => {
       state.status = "IDLE";
     },
+    setStatusFulfilled: (state) => {
+      state.status = "FULFILLED";
+    },
+    profilePostLikeToogle: (state, { payload }) => {
+      const { username, postId } = payload;
+      const exsitingPost = state.profiles[username].posts.find(
+        (post) => post._id === postId
+      );
+      if (exsitingPost && exsitingPost.currentUserLike) {
+        exsitingPost.currentUserLike = false;
+        exsitingPost.likes--;
+      } else if (exsitingPost && !exsitingPost.currentUserLike) {
+        exsitingPost.currentUserLike = true;
+        exsitingPost.likes++;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getProfileByUsername.pending, (state) => {
@@ -43,11 +59,13 @@ const profilesSlice = createSlice({
       state.error = null;
     });
     builder.addCase(getProfileByUsername.rejected, (state, { payload }) => {
-      if (payload) {
-        state.error = payload.error;
-      }
+      state.status = "ERROR";
     });
   },
 });
-export const { setStatusIdle } = profilesSlice.actions;
+export const {
+  setStatusIdle,
+  setStatusFulfilled,
+  profilePostLikeToogle,
+} = profilesSlice.actions;
 export const profilesReducer = profilesSlice.reducer;

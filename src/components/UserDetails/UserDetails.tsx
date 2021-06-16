@@ -2,7 +2,12 @@ import { Avatar } from "components/Avatar";
 import { UserProfile } from "types";
 import { NavLink } from "react-router-dom";
 import { PostCard } from "components/PostCard";
+import { updatePostLike } from "services";
+import { profilePostLikeToogle } from "features/profilesSlice";
+import { useAppDispatch } from "app/hooks";
+
 export const UserDetails = ({ userProfile }: { userProfile: UserProfile }) => {
+  const appDispatch = useAppDispatch();
   const {
     bio,
     fullname,
@@ -14,6 +19,13 @@ export const UserDetails = ({ userProfile }: { userProfile: UserProfile }) => {
     followers,
     posts,
   } = userProfile;
+  const likeToogle = (postId: string) => {
+    appDispatch(profilePostLikeToogle({ username, postId }));
+  };
+  const handleLike = (postId: string) => {
+    likeToogle(postId);
+    updatePostLike({ postId, likeToogle });
+  };
   return (
     <>
       <div className="header-image-container position-relative bg-grey">
@@ -50,7 +62,7 @@ export const UserDetails = ({ userProfile }: { userProfile: UserProfile }) => {
       </div>
       <div className="border-top margin-t-16">
         {posts?.map((post) => (
-          <PostCard post={post} />
+          <PostCard key={post._id} post={post} handleLike={handleLike} />
         ))}
       </div>
     </>

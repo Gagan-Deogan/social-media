@@ -4,7 +4,7 @@ import { ImageIcon, SendIcon } from "assests/icons";
 import { Avatar } from "components/Avatar";
 import { createPost } from "services";
 import { useAppDispatch } from "app/hooks";
-import { addNewPost } from "features/postsSlice";
+import { addNewPost } from "features/homeSlice";
 export const Compose = () => {
   const ref = useRef<HTMLTextAreaElement>(null);
   const hiddenFileInput = useRef<HTMLInputElement>(null);

@@ -1,5 +1,7 @@
 export {
   profilesReducer,
-  getProfileByUsername,
   setStatusIdle,
-} from "./profileSlice";
+  setStatusFulfilled,
+  getProfileByUsername,
+  profilePostLikeToogle,
+} from "./profilesSlice";

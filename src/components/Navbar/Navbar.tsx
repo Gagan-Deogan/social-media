@@ -5,7 +5,7 @@ import { useAppSelector } from "app/hooks";
 
 const navOptions = {
   Home: { link: "home", icon: <HomeIcon /> },
-  Explore: { link: "explore", icon: <SeacrhIcon /> },
+  Search: { link: "search", icon: <SeacrhIcon /> },
   Notifications: { link: "notifications", icon: <BellIcon /> },
 };
 export const Navbar = (): JSX.Element => {
@@ -45,6 +45,12 @@ export const Navbar = (): JSX.Element => {
               {value.icon}
             </NavLink>
           ))}
+          <NavLink
+            className="btn-link margin-16 margin-t-8 border-rounded"
+            to={`/${currentUser?.username}`}
+            key={"Profile"}>
+            <UserIcon />
+          </NavLink>
         </div>
       </Hidden>
     </>

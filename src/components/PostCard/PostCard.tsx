@@ -3,20 +3,16 @@ import { Post as PostProps } from "types";
 import { Avatar } from "components/Avatar";
 import { LikedIcon, LikeIcon } from "assests/icons";
 import { useAppDispatch } from "app/hooks";
-import { likePost } from "features/postsSlice";
-import { updatePostLike } from "services/index";
-import { Button } from "components/Button";
 
-export const PostCard = ({ post }: { post: PostProps }) => {
+export const PostCard = ({
+  post,
+  handleLike,
+}: {
+  post: PostProps;
+  handleLike: Function;
+}) => {
   const { _id, title, imageURL, createdBy, likes, currentUserLike } = post;
-  const appDispatch = useAppDispatch();
-  const likeToogle = () => {
-    appDispatch(likePost({ postId: _id }));
-  };
-  const handleLike = () => {
-    likeToogle();
-    updatePostLike({ postId: _id, likeToogle });
-  };
+
   return (
     <article className="column align-start border bor-rad-8 padding-16 margin-16">
       <div className="row align-center cursor-pointer">
@@ -33,7 +29,7 @@ export const PostCard = ({ post }: { post: PostProps }) => {
       <div className="row align-center">
         <button
           className="btn-link border-rounded pink-color"
-          onClick={handleLike}>
+          onClick={() => handleLike(_id)}>
           {!currentUserLike && <LikeIcon />}
           {currentUserLike && <LikedIcon />}
         </button>

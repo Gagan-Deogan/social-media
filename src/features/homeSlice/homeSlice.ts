@@ -1,20 +1,20 @@
 import axios from "axios";
 import { FetchError } from "types";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { InitialState } from "./types";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { HomeSliceInitialState, GetHomePostResponse } from "./homeSlice.types";
 import { Post } from "types";
-const initialState: InitialState = {
+const initialState: HomeSliceInitialState = {
   posts: [],
   status: "IDLE",
   error: "",
 };
-type GetPostResponse = { data: Post[]; success: boolean };
-export const fetchPosts = createAsyncThunk<
+
+export const getHomePost = createAsyncThunk<
   Post[],
   undefined,
   { rejectValue: FetchError }
 >("posts/fetch", async (_, thunkApi) => {
-  const res: GetPostResponse = await axios.get("/posts");
+  const res: GetHomePostResponse = await axios.get("/posts");
   if (res.success) {
     const data: Post[] = res.data;
     return data;
@@ -28,7 +28,10 @@ export const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    likePost: (state, action) => {
+    homePostLikeToogle: (
+      state: HomeSliceInitialState,
+      action: PayloadAction<{ postId: string }>
+    ) => {
       const { postId } = action.payload;
       const exsitingPost = state.posts.find((post) => post._id === postId);
       if (exsitingPost && exsitingPost.currentUserLike) {
@@ -39,20 +42,20 @@ export const postsSlice = createSlice({
         exsitingPost.likes++;
       }
     },
-    addNewPost: (state, action) => {
+    addNewPost: (state: HomeSliceInitialState, action: PayloadAction<Post>) => {
       const post: Post = action.payload;
       state.posts.unshift(post);
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchPosts.pending, (state, { payload }) => {
+    builder.addCase(getHomePost.pending, (state, { payload }) => {
       state.status = "PENDING";
     });
-    builder.addCase(fetchPosts.fulfilled, (state, { payload }) => {
+    builder.addCase(getHomePost.fulfilled, (state, { payload }) => {
       state.posts = payload;
       state.status = "FULFILLED";
     });
-    builder.addCase(fetchPosts.rejected, (state, { payload }) => {
+    builder.addCase(getHomePost.rejected, (state, { payload }) => {
       if (payload) {
         state.error = payload.error;
       }
@@ -61,6 +64,6 @@ export const postsSlice = createSlice({
   },
 });
 
-export const { likePost, addNewPost } = postsSlice.actions;
+export const { homePostLikeToogle, addNewPost } = postsSlice.actions;
 
 export const postsReducer = postsSlice.reducer;
