@@ -14,7 +14,7 @@ export const Search = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
 
-  const { users, status, recents } = useAppSelector((state) => state.explore);
+  const { users, status, recents } = useAppSelector((state) => state.search);
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const search = e.target.value;
     if (search) {

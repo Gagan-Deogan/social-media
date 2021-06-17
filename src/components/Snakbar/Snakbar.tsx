@@ -1,6 +1,6 @@
 import "./snakbar.css";
 import { useEffect } from "react";
-import { CloseIcon, CheckIcon, ErrorIcon } from "assests/icons";
+import { CancelWhite, CheckIcon, ErrorIcon } from "assests/icons";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { hideSnakbar } from "features/snakbarSlice";
 
@@ -36,7 +36,7 @@ export const Snakbar = () => {
       {type === "ALERT" && <ErrorIcon />}
       <h5>{message}</h5>
       <button className="btn-link">
-        <CloseIcon />
+        <CancelWhite />
       </button>
     </div>
   );

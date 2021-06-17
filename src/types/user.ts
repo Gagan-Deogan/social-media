@@ -12,9 +12,12 @@ export type UserProfile = {
   fullname: string;
   username: string;
   imageURL: string;
-  headerImage: string;
+  headerImageURL: string;
   bio: string;
   following: User[];
   followers: User[];
+  followersLength: number;
+  followingLength: number;
   posts: Post[];
+  isFollow: boolean;
 };

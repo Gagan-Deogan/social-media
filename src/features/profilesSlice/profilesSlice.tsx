@@ -17,8 +17,41 @@ export const getProfileByUsername = createAsyncThunk<
     `/profiles${username}`
   );
   if (res.success) {
-    const data: UserProfile = res.data;
-    return data;
+    return res.data;
+  }
+  return thunkApi.rejectWithValue({
+    error: "Failed",
+  });
+});
+
+export const updateFollowing = createAsyncThunk<
+  string,
+  { username: string },
+  { rejectValue: FetchError }
+>("profiles/updateFollowing", async ({ username }, thunkApi) => {
+  const res: {
+    success: boolean;
+    data: string;
+  } = await axios.put("/profiles/follow", { username });
+  if (res.success) {
+    return res.data;
+  }
+  return thunkApi.rejectWithValue({
+    error: "Failed",
+  });
+});
+
+export const updateProfile = createAsyncThunk<
+  UserProfile,
+  { newFullname: string; newBio: string },
+  { rejectValue: FetchError }
+>("profiles/editProfile", async ({ newFullname, newBio }, thunkApi) => {
+  const res: {
+    success: boolean;
+    data: UserProfile;
+  } = await axios.put("profiles/edit-profile", { newFullname, newBio });
+  if (res.success) {
+    return res.data;
   }
   return thunkApi.rejectWithValue({
     error: "Failed",
@@ -58,7 +91,34 @@ const profilesSlice = createSlice({
       state.status = "FULFILLED";
       state.error = null;
     });
-    builder.addCase(getProfileByUsername.rejected, (state, { payload }) => {
+    builder.addCase(getProfileByUsername.rejected, (state) => {
+      state.status = "ERROR";
+    });
+
+    builder.addCase(updateFollowing.pending, (state, { meta }) => {
+      const { username } = meta.arg;
+      state.profiles[username].isFollow = !state.profiles[username].isFollow;
+      if (state.profiles[username].isFollow) {
+        state.profiles[username].followersLength =
+          state.profiles[username].followersLength + 1;
+      } else {
+        state.profiles[username].followersLength =
+          state.profiles[username].followersLength - 1;
+      }
+    });
+    builder.addCase(updateFollowing.rejected, (state, { meta }) => {
+      const { username } = meta.arg;
+      state.profiles[username].isFollow = !state.profiles[username].isFollow;
+    });
+    builder.addCase(updateProfile.pending, (state) => {
+      state.status = "PENDING";
+    });
+    builder.addCase(updateProfile.fulfilled, (state, { payload }) => {
+      state.profiles[payload.username] = payload;
+      state.status = "FULFILLED";
+      state.error = null;
+    });
+    builder.addCase(updateProfile.rejected, (state) => {
       state.status = "ERROR";
     });
   },

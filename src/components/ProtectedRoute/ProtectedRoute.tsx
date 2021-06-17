@@ -6,7 +6,7 @@ export const ProtectedRoute: React.FC<ProtectRouteProps> = (props) => {
   const { pathname } = useLocation();
 
   const { path } = { ...props };
-  const { currentUser } = useAppSelector((state) => state.users);
+  const { currentUser } = useAppSelector((state) => state.auth);
   return currentUser ? (
     <Route path={path} {...props} />
   ) : (

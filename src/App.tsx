@@ -6,9 +6,9 @@ import { Navbar } from "components/Navbar";
 import { Snakbar } from "components/Snakbar";
 import { Interceptor } from "components/Interceptor";
 import { Navigation } from "components/Navigation";
-import { initializeUser } from "features/userSlice";
+import { initializeUser } from "features/authSlice";
 const App = () => {
-  const { currentUser, token } = useAppSelector((state) => state.users);
+  const { currentUser, token } = useAppSelector((state) => state.auth);
   const { isShow } = useAppSelector((state) => state.snakbar);
   const appDispatch = useAppDispatch();
   setupDefaultsHeader(token);

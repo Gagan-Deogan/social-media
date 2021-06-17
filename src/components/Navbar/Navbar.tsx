@@ -9,7 +9,7 @@ const navOptions = {
   Notifications: { link: "notifications", icon: <BellIcon /> },
 };
 export const Navbar = (): JSX.Element => {
-  const { currentUser } = useAppSelector((state) => state.users);
+  const { currentUser } = useAppSelector((state) => state.auth);
 
   return (
     <>

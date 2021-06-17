@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "app/hooks";
-import { logout } from "features/userSlice";
+import { logout } from "features/authSlice";
 import { showSnakbar } from "features/snakbarSlice";
 export const Interceptor = () => {
   const navigate = useNavigate();

@@ -4,4 +4,6 @@ export {
   setStatusFulfilled,
   getProfileByUsername,
   profilePostLikeToogle,
+  updateFollowing,
+  updateProfile,
 } from "./profilesSlice";

@@ -10,7 +10,7 @@ export const Compose = () => {
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const imagePreview = useRef<any>();
   const [title, setTitle] = useState<string>();
-  const [selectedImage, setSelectedImage] = useState();
+  const [selectedImage, setSelectedImage] = useState<File>();
   const appDispatch = useAppDispatch();
   const handleBrowerOpen = () => {
     if (hiddenFileInput.current) {
@@ -18,8 +18,8 @@ export const Compose = () => {
     }
   };
 
-  const handleFileChange = (e: any) => {
-    if (e.target.files) {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && !!e.target.files[0]) {
       setSelectedImage(e.target.files[0]);
       if (imagePreview.current)
         imagePreview.current.src = URL.createObjectURL(e.target.files[0]);
@@ -82,7 +82,7 @@ export const Compose = () => {
             className="dis-hide"
             accept="image/x-png,image/gif,image/jpeg"
             ref={hiddenFileInput}
-            onChange={(e) => handleFileChange(e)}
+            onChange={handleFileChange}
           />
           <button className="btn-link border-rounded" onClick={handelUpload}>
             <SendIcon />

@@ -1,7 +1,6 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { InitialState, res } from "./types";
-import { UserProfile } from "types/user";
 
 import { FetchError } from "types";
 const initialState: InitialState = {
@@ -49,8 +48,8 @@ export const initializeUser = createAsyncThunk<
   });
 });
 
-export const userSlice = createSlice({
-  name: "user",
+export const authSlice = createSlice({
+  name: "auth",
   initialState,
   reducers: {
     logout: (state) => {
@@ -90,5 +89,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { logout } = userSlice.actions;
-export const userReducer = userSlice.reducer;
+export const { logout } = authSlice.actions;
+export const authReducer = authSlice.reducer;

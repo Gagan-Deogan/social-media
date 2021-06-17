@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Input } from "components/Input";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { PasswordInput } from "components/PasswordInput";
-import { loginUser } from "features/userSlice/userSlice";
+import { loginUser } from "features/authSlice/authSlice";
 import { initialState, reducer } from "./reducer";
 type State = { from: string } | null;
 export const Login = () => {
@@ -13,7 +13,7 @@ export const Login = () => {
   const state = location.state as State;
 
   const navigate = useNavigate();
-  const { currentUser, status } = useAppSelector((state) => state.users);
+  const { currentUser, status } = useAppSelector((state) => state.auth);
   const appDispatch = useAppDispatch();
   const [{ email, password }, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {

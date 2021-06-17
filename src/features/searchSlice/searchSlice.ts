@@ -24,8 +24,8 @@ export const searchByUsername = createAsyncThunk<
   });
 });
 
-const exploreSlice = createSlice({
-  name: "explore",
+const searchSlice = createSlice({
+  name: "search",
   initialState,
   reducers: {
     setStatusIdle: (state) => {
@@ -65,5 +65,5 @@ export const {
   removeFromRecent,
   addToRecent,
   setStatusIdle,
-} = exploreSlice.actions;
-export const exploreReducer = exploreSlice.reducer;
+} = searchSlice.actions;
+export const searchReducer = searchSlice.reducer;
