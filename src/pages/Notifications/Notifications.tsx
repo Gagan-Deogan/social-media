@@ -1,6 +1,19 @@
+import { useEffect } from "react";
+import { useAppSelector, useAppDispatch } from "app/hooks";
 import { Avatar } from "components/Avatar";
-
+import { getNotifications } from "features/notificationsSlice";
 export const Notifications = () => {
+  const { status, notifications } = useAppSelector(
+    (state) => state.notifications
+  );
+  const appDispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (status === "IDLE") {
+      appDispatch(getNotifications());
+    }
+  }, [status]);
+
   return (
     <>
       <section className="border-right">

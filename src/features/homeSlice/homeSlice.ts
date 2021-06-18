@@ -48,7 +48,7 @@ export const postsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getHomePost.pending, (state, { payload }) => {
+    builder.addCase(getHomePost.pending, (state) => {
       state.status = "PENDING";
     });
     builder.addCase(getHomePost.fulfilled, (state, { payload }) => {

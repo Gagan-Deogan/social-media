@@ -37,7 +37,6 @@ export const createPost = async ({
       });
   };
   const imageUniqueName = uuid() + selectedImage.name;
-  console.log(imageUniqueName);
   const uploadTask = storage
     .ref(`images/${imageUniqueName}`)
     .put(selectedImage);

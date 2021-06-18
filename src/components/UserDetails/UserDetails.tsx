@@ -28,7 +28,7 @@ export const UserDetails = ({ userProfile }: { userProfile: UserProfile }) => {
     posts,
     isFollow,
   } = userProfile;
-
+  console.log({ userProfile });
   const likeToogle = (postId: string) => {
     appDispatch(profilePostLikeToogle({ username, postId }));
   };
@@ -51,7 +51,7 @@ export const UserDetails = ({ userProfile }: { userProfile: UserProfile }) => {
           <img
             src={headerImageURL}
             alt="Header"
-            className="position-absolute right w12"
+            className="position-absolute top-0 right w12"
           />
         )}
       </div>

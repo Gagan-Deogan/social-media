@@ -1,7 +1,5 @@
 .header-image-container {
   padding-bottom: 33.3%;
   object-fit: contain;
-}
-.header-image-container > img {
-  height: 100%;
+  overflow: hidden;
 }

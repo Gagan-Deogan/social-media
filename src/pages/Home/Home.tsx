@@ -12,7 +12,7 @@ export const Home = () => {
     if (status === "IDLE") {
       appDispatch(getHomePost());
     }
-  }, [status]);
+  }, [status, appDispatch]);
 
   const likeToogle = (postId: string) => {
     appDispatch(homePostLikeToogle({ postId }));

@@ -22,10 +22,15 @@ export type EditReducerActions =
   | {
       type: "SET_HEADER_IMAGE";
       payload: File;
+    }
+  | {
+      type: "SET_STATUS";
+      payload: "IDLE" | "PENDING" | "FULFILLED" | "ERROR";
     };
 export type EditReducerInitialState = {
   newFullname: string;
   newBio: string;
   newProfileImage: File | string;
   newHeaderImage: File | string;
+  status: "IDLE" | "PENDING" | "FULFILLED" | "ERROR";
 };

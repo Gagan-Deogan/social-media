@@ -13,5 +13,7 @@ export const reducer = (
       return { ...state, newProfileImage: action.payload };
     case "SET_HEADER_IMAGE":
       return { ...state, newHeaderImage: action.payload };
+    case "SET_STATUS":
+      return { ...state, status: action.payload };
   }
 };

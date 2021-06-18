@@ -43,20 +43,33 @@ export const updateFollowing = createAsyncThunk<
 
 export const updateProfile = createAsyncThunk<
   UserProfile,
-  { newFullname: string; newBio: string },
+  {
+    newFullname: string;
+    newBio: string;
+    newImageUrl: string;
+    newHeaderImageUrl: string;
+  },
   { rejectValue: FetchError }
->("profiles/editProfile", async ({ newFullname, newBio }, thunkApi) => {
-  const res: {
-    success: boolean;
-    data: UserProfile;
-  } = await axios.put("profiles/edit-profile", { newFullname, newBio });
-  if (res.success) {
-    return res.data;
+>(
+  "profiles/editProfile",
+  async ({ newFullname, newBio, newImageUrl, newHeaderImageUrl }, thunkApi) => {
+    const res: {
+      success: boolean;
+      data: UserProfile;
+    } = await axios.put("profiles/edit-profile", {
+      newFullname,
+      newBio,
+      newImageUrl,
+      newHeaderImageUrl,
+    });
+    if (res.success) {
+      return res.data;
+    }
+    return thunkApi.rejectWithValue({
+      error: "Failed",
+    });
   }
-  return thunkApi.rejectWithValue({
-    error: "Failed",
-  });
-});
+);
 
 const profilesSlice = createSlice({
   name: "profiles",

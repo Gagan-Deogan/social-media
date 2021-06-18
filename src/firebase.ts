@@ -30,3 +30,4 @@ const Init = () => {
 };
 const firebaseApp = Init();
 export const storage = firebaseApp.storage();
+export const storageRef = firebaseApp.storage().ref();
