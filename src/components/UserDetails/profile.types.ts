@@ -1,6 +1,6 @@
 export type EditProfileProps = {
   fullname: string;
-  bio: string;
+  bio?: string;
   headerImageURL: string;
   imageURL: string;
   handleClose: Function;

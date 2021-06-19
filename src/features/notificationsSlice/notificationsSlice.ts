@@ -15,6 +15,7 @@ export const getNotifications = createAsyncThunk<
   const res: { success: boolean; data: Notification[] } = await axios.get(
     "/notifications"
   );
+  console.log(res);
   if (res.success) {
     const data: Notification[] = res.data;
     return data;

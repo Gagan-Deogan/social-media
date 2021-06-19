@@ -13,7 +13,7 @@ export type UserProfile = {
   username: string;
   imageURL: string;
   headerImageURL: string;
-  bio: string;
+  bio?: string;
   following: User[];
   followers: User[];
   followersLength: number;

@@ -19,7 +19,7 @@ export const EditProfile = ({
   const headerImageUploadRef = useRef<HTMLInputElement>(null);
   const initialState: EditReducerInitialState = {
     newFullname: fullname,
-    newBio: bio,
+    newBio: bio ?? "",
     newProfileImage: imageURL,
     newHeaderImage: headerImageURL,
     status: "IDLE",
@@ -80,7 +80,7 @@ export const EditProfile = ({
   const handleSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    if (fullname && bio && newProfileImage && newHeaderImage) {
+    if (newFullname && newBio && newProfileImage && newHeaderImage) {
       dispatch({ type: "SET_STATUS", payload: "PENDING" });
       const newImageUrl = await handleUploadImage(newProfileImage);
       const newHeaderImageUrl = await handleUploadImage(newHeaderImage);
