@@ -1,1 +1,5 @@
-export { getNotifications, notificationsReducer } from "./notificationsSlice";
+export {
+  getNotifications,
+  notificationsReducer,
+  refreshNotification,
+} from "./notificationsSlice";

@@ -1,35 +1,12 @@
 import { useEffect } from "react";
+import { RefreshIcon } from "assests/icons";
 import { useAppSelector, useAppDispatch } from "app/hooks";
-import { Avatar } from "components/Avatar";
-import { getNotifications } from "features/notificationsSlice";
-import { Notification } from "features/notificationsSlice/notifications.type";
-const NotificationItem = ({ notification }: { notification: Notification }) => {
-  const { sourceUser, text } = notification;
-  const post =
-    notification.notificationType === "LIKE" ? notification.post : null;
-  console.log(post);
-  return (
-    <article className="border-bottom padding-16 row align-center justify-between">
-      <div className="row">
-        <Avatar image={sourceUser.imageURL} name={sourceUser.fullname} />
-        <div>
-          <h5 className="margin-l-16">
-            <span className="bold margin-r-4">{sourceUser.fullname}</span>{" "}
-            {text}
-          </h5>
-          {post && (
-            <p className="margin-l-16 grey-color">{post.title?.slice(0, 24)}</p>
-          )}
-        </div>
-      </div>
-      {post && post.imageURL && (
-        <div className="w1">
-          <img src={post.imageURL} className="responvise-img" alt="" />
-        </div>
-      )}
-    </article>
-  );
-};
+import {
+  getNotifications,
+  refreshNotification,
+} from "features/notificationsSlice";
+import { debounce } from "utils";
+import { NotificationItem } from "./NotificationItem";
 
 export const Notifications = () => {
   const { status, notifications } = useAppSelector(
@@ -41,13 +18,19 @@ export const Notifications = () => {
     if (status === "IDLE") {
       appDispatch(getNotifications());
     }
-  }, [status]);
-
+  }, [status, appDispatch]);
+  const handleRefresh = () => {
+    appDispatch(refreshNotification());
+  };
+  const betterHandleRefresh = debounce(handleRefresh, 500);
   return (
     <>
       <section className="border-right">
-        <div className="border-bottom position-sticky top-0 bg-white padding-8 padding-l-16">
+        <div className="row justify-between align-center border-bottom position-sticky top-0 bg-white padding-8 padding-l-16 padding-r-16">
           <h2 className="bold">Notifications</h2>
+          <button className="btn-link" onClick={betterHandleRefresh}>
+            <RefreshIcon />
+          </button>
         </div>
         {notifications.map((notification) => (
           <NotificationItem notification={notification} />

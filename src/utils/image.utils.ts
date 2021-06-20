@@ -1,8 +1,16 @@
-import { storageRef } from "../../firebase";
+import { storageRef } from "../firebase";
 import { uuid } from "utils";
 const metadata = {
   contentType: "image/jpeg",
 };
+export const createImagePreviewSrc = (image: File) => {
+  return URL.createObjectURL(image);
+};
+export const isValidImage = (imageName: string) => {
+  const extension = imageName.split(".").pop() || "";
+  return ["jpg", "jpeg"].includes(extension);
+};
+
 export const UploadImageToBucket = async (
   image: File
 ): Promise<string | undefined> => {

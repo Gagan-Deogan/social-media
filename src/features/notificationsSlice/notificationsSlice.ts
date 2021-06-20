@@ -15,7 +15,6 @@ export const getNotifications = createAsyncThunk<
   const res: { success: boolean; data: Notification[] } = await axios.get(
     "/notifications"
   );
-  console.log(res);
   if (res.success) {
     const data: Notification[] = res.data;
     return data;
@@ -28,7 +27,11 @@ export const getNotifications = createAsyncThunk<
 const notifiactionSlice = createSlice({
   name: "notification",
   initialState,
-  reducers: {},
+  reducers: {
+    refreshNotification: (state) => {
+      state.status = "IDLE";
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getNotifications.pending, (state) => {
       state.status = "PENDING";
@@ -42,5 +45,5 @@ const notifiactionSlice = createSlice({
     });
   },
 });
-
+export const { refreshNotification } = notifiactionSlice.actions;
 export const notificationsReducer = notifiactionSlice.reducer;

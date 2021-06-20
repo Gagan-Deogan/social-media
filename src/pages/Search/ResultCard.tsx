@@ -2,7 +2,7 @@ import { Avatar } from "components/Avatar";
 import { User } from "types";
 import { CancelIcon } from "assests/icons";
 
-export const UserCard = ({
+export const ResultCard = ({
   user,
   handleRemove,
   handleNavigate,

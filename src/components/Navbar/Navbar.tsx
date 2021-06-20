@@ -8,6 +8,9 @@ const navOptions = {
   Search: { link: "search", icon: <SeacrhIcon /> },
   Notifications: { link: "notifications", icon: <BellIcon /> },
 };
+const activeStyle = {
+  color: "var(--primary-default)",
+};
 export const Navbar = (): JSX.Element => {
   const { currentUser } = useAppSelector((state) => state.auth);
 
@@ -20,7 +23,8 @@ export const Navbar = (): JSX.Element => {
               <NavLink
                 className="btn-link margin-t-16 border-rounded"
                 to={`/${value.link}`}
-                key={key}>
+                key={key}
+                activeStyle={activeStyle}>
                 {value.icon}
                 <span className="margin-l-8 bold">{key}</span>
               </NavLink>
@@ -28,7 +32,8 @@ export const Navbar = (): JSX.Element => {
             <NavLink
               className="btn-link margin-t-16 border-rounded"
               to={`/${currentUser?.username}`}
-              key={"Profile"}>
+              key={"Profile"}
+              activeStyle={activeStyle}>
               <UserIcon />
               <span className="margin-l-8 bold">{"Profile"}</span>
             </NavLink>
@@ -41,14 +46,16 @@ export const Navbar = (): JSX.Element => {
             <NavLink
               className="btn-link margin-16 margin-t-8 border-rounded"
               to={`/${value.link}`}
-              key={key}>
+              key={key}
+              activeStyle={activeStyle}>
               {value.icon}
             </NavLink>
           ))}
           <NavLink
             className="btn-link margin-16 margin-t-8 border-rounded"
             to={`/${currentUser?.username}`}
-            key={"Profile"}>
+            key={"Profile"}
+            activeStyle={activeStyle}>
             <UserIcon />
           </NavLink>
         </div>

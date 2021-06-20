@@ -6,6 +6,7 @@ import { Search } from "pages/Search";
 import { Profile } from "pages/Profile";
 import { Signup } from "pages/Signup";
 import { Login } from "pages/Login";
+import { PostDetails } from "pages/PostDetails/PostDetails";
 export const Navigation = () => {
   return (
     <Routes>
@@ -16,6 +17,10 @@ export const Navigation = () => {
       <ProtectedRoute path="/notifications" element={<Notifications />} />
       <ProtectedRoute path="/profile" element={<Profile />} />
       <ProtectedRoute path="/:username" element={<Profile />} />
+      <ProtectedRoute
+        path="/:username/post/:postId"
+        element={<PostDetails />}
+      />
     </Routes>
   );
 };

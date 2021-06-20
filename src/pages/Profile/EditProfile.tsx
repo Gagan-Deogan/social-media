@@ -1,12 +1,12 @@
 import React, { useReducer, useRef } from "react";
 import { CancelIcon, CameraIcon } from "assests/icons";
-import { EditProfileProps, EditReducerInitialState } from "./profile.types";
+import { EditProfileProps, EditReducerInitialState } from "./editProfile.types";
 import { Avatar } from "components/Avatar";
 import { reducer } from "./editProfile.reducer";
 import { useAppDispatch } from "app/hooks";
 import { Spinner } from "components/Spinner";
 import { updateProfile } from "features/profilesSlice";
-import { UploadImageToBucket } from "./profiles.service";
+import { UploadImageToBucket } from "utils";
 export const EditProfile = ({
   fullname,
   bio,
@@ -205,7 +205,11 @@ export const EditProfile = ({
             </section>
           </>
         )}
-        {status === "PENDING" && <Spinner />}
+        {status === "PENDING" && (
+          <div className="margin-64">
+            <Spinner />
+          </div>
+        )}
         {status === "ERROR" && (
           <>
             <h3>Something went worng,</h3>

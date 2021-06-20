@@ -1,6 +1,6 @@
 export function debounce<T extends Function>(func: T, wait: number): T {
   let timeoutID: number;
-  return function (this: any, ...args: any[]) {
+  return function (this: Function, ...args: any[]) {
     clearTimeout(timeoutID);
     const context = this;
 

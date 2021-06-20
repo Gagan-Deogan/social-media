@@ -13,7 +13,7 @@ export const getHomePost = createAsyncThunk<
   Post[],
   undefined,
   { rejectValue: FetchError }
->("posts/fetch", async (_, thunkApi) => {
+>("home/fetch", async (_, thunkApi) => {
   const res: GetHomePostResponse = await axios.get("/posts");
   if (res.success) {
     const data: Post[] = res.data;
@@ -24,14 +24,29 @@ export const getHomePost = createAsyncThunk<
   });
 });
 
-export const postsSlice = createSlice({
-  name: "posts",
+export const uploadNewPost = createAsyncThunk<
+  Post,
+  { imageURL: string | null; title: string | null },
+  { rejectValue: FetchError }
+>("posts/upload", async ({ imageURL, title }, thunkApi) => {
+  const res: {
+    data: Post;
+    success: boolean;
+  } = await axios.post("/posts", { imageURL, title });
+  if (res.success) {
+    const data: Post = res.data;
+    return data;
+  }
+  return thunkApi.rejectWithValue({
+    error: "Failed",
+  });
+});
+
+export const homeSlice = createSlice({
+  name: "home",
   initialState,
   reducers: {
-    homePostLikeToogle: (
-      state: HomeSliceInitialState,
-      action: PayloadAction<{ postId: string }>
-    ) => {
+    homePostLikeToogle: (state, action: PayloadAction<{ postId: string }>) => {
       const { postId } = action.payload;
       const exsitingPost = state.posts.find((post) => post._id === postId);
       if (exsitingPost && exsitingPost.currentUserLike) {
@@ -45,6 +60,9 @@ export const postsSlice = createSlice({
     addNewPost: (state: HomeSliceInitialState, action: PayloadAction<Post>) => {
       const post: Post = action.payload;
       state.posts.unshift(post);
+    },
+    refreshHome: (state) => {
+      state.status = "IDLE";
     },
   },
   extraReducers: (builder) => {
@@ -61,9 +79,17 @@ export const postsSlice = createSlice({
       }
       state.status = "ERROR";
     });
+    builder.addCase(uploadNewPost.fulfilled, (state, { payload }) => {
+      const post = payload;
+      state.posts.unshift(post);
+    });
   },
 });
 
-export const { homePostLikeToogle, addNewPost } = postsSlice.actions;
+export const {
+  homePostLikeToogle,
+  addNewPost,
+  refreshHome,
+} = homeSlice.actions;
 
-export const postsReducer = postsSlice.reducer;
+export const homeReducer = homeSlice.reducer;

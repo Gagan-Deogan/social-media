@@ -6,7 +6,7 @@ import {
   setStatusIdle,
 } from "features/searchSlice";
 import { Spinner } from "components/Spinner";
-import { UserCard } from "components/UserCard";
+import { ResultCard } from "./ResultCard";
 import { debounce } from "utils";
 import { User } from "types";
 import { useNavigate } from "react-router";
@@ -49,10 +49,14 @@ export const Search = () => {
             placeholder="Username"
           />
         </div>
-        {status === "PENDING" && <Spinner />}
+        {status === "PENDING" && (
+          <div className="margin-64">
+            <Spinner />
+          </div>
+        )}
         {status === "FULFILLED" &&
           users.map((user) => (
-            <UserCard
+            <ResultCard
               user={user}
               key={user._id}
               handleNavigate={handleNavigate}
@@ -62,7 +66,7 @@ export const Search = () => {
           <div>
             <h3 className="margin-8">Recent</h3>
             {recents.map((user) => (
-              <UserCard
+              <ResultCard
                 key={user._id}
                 user={user}
                 handleNavigate={handleNavigate}

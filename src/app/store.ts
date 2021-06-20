@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { postsReducer } from "features/homeSlice";
+import { homeReducer } from "features/homeSlice";
 import { authReducer } from "features/authSlice";
 import { snakbarReducer } from "features/snakbarSlice";
 import { profilesReducer } from "features/profilesSlice";
@@ -8,7 +8,7 @@ import { searchReducer } from "features/searchSlice";
 import { notificationsReducer } from "features/notificationsSlice";
 export const store = configureStore({
   reducer: {
-    posts: postsReducer,
+    home: homeReducer,
     auth: authReducer,
     snakbar: snakbarReducer,
     profiles: profilesReducer,

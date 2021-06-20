@@ -7,7 +7,7 @@ import {
   setStatusFulfilled,
 } from "features/profilesSlice";
 import { Spinner } from "components/Spinner";
-import { UserDetails } from "components/UserDetails";
+import { UserDetails } from "./UserDetails";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 
 export const Profile = (): JSX.Element => {
@@ -40,7 +40,11 @@ export const Profile = (): JSX.Element => {
         <div className="border-bottom position-sticky top-0 bg-white padding-8 padding-l-16">
           <h2 className="bold">Profile</h2>
         </div>
-        {status === "PENDING" && <Spinner></Spinner>}
+        {status === "PENDING" && (
+          <div className="margin-64">
+            <Spinner />
+          </div>
+        )}
         {status === "FULFILLED" && profiles[username] && (
           <UserDetails userProfile={profiles[username]} />
         )}

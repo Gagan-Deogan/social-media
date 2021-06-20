@@ -1,4 +1,7 @@
-import { EditReducerInitialState, EditReducerActions } from "./profile.types";
+import {
+  EditReducerInitialState,
+  EditReducerActions,
+} from "./editProfile.types";
 
 export const reducer = (
   state: EditReducerInitialState,
