@@ -70,40 +70,6 @@ export const updateProfile = createAsyncThunk<
   }
 );
 
-export const getUserFollower = createAsyncThunk<
-  UserProfile,
-  { username: string },
-  { rejectValue: ServerError }
->("profile/followers", async ({ username }, thunkApi) => {
-  const res: {
-    success: boolean;
-    data: UserProfile;
-  } = await axios.get(`/profiles/${username}/followers`);
-  if (res.success) {
-    return res.data;
-  }
-  return thunkApi.rejectWithValue({
-    error: "Failed",
-  });
-});
-
-export const getUserFollowing = createAsyncThunk<
-  User[],
-  { username: string },
-  { rejectValue: ServerError }
->("profile/following", async ({ username }, thunkApi) => {
-  const res: {
-    success: boolean;
-    data: User[];
-  } = await axios.get(`/profiles/${username}/following`);
-  if (res.success) {
-    return res.data;
-  }
-  return thunkApi.rejectWithValue({
-    error: "Failed",
-  });
-});
-
 const profilesSlice = createSlice({
   name: "profiles",
   initialState,
@@ -163,33 +129,6 @@ const profilesSlice = createSlice({
       state.status = "FULFILLED";
     });
     builder.addCase(updateProfile.rejected, (state) => {
-      state.status = "ERROR";
-    });
-
-    builder.addCase(getUserFollower.pending, (state) => {
-      state.status = "PENDING";
-    });
-    builder.addCase(getUserFollower.fulfilled, (state, { meta, payload }) => {
-      const username = meta.arg.username;
-      if (username in state.profiles) {
-        state.profiles[username].followers = payload.followers;
-      } else {
-        state.profiles[username] = payload;
-      }
-      state.status = "FULFILLED";
-    });
-    builder.addCase(getUserFollower.rejected, (state) => {
-      state.status = "ERROR";
-    });
-
-    builder.addCase(getUserFollowing.pending, (state) => {
-      state.status = "PENDING";
-    });
-    builder.addCase(getUserFollowing.fulfilled, (state, { meta, payload }) => {
-      state.profiles[meta.arg.username].following = payload;
-      state.status = "FULFILLED";
-    });
-    builder.addCase(getUserFollowing.rejected, (state) => {
       state.status = "ERROR";
     });
   },
