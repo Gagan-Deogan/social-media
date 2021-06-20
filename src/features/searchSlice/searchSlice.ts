@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { ExploreSliceInitialState, ExploreResponese } from "./searchSlice.type";
-import { FetchError, User } from "types";
+import { ServerError, User } from "types";
 import axios from "axios";
 const initialState: ExploreSliceInitialState = {
   users: [],
@@ -12,7 +12,7 @@ const initialState: ExploreSliceInitialState = {
 export const searchByUsername = createAsyncThunk<
   User[],
   { search: string },
-  { rejectValue: FetchError }
+  { rejectValue: ServerError }
 >("explore/seacrhUsers", async ({ search }, thunkApi) => {
   const res: ExploreResponese = await axios.get(`/search/${search}`);
   if (res.success) {

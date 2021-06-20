@@ -1,4 +1,4 @@
-import { FetchError } from "types";
+import { ServerError } from "types";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { NotificationsSliceState, Notification } from "./notifications.type";
 import axios from "axios";
@@ -10,7 +10,7 @@ const initialState: NotificationsSliceState = {
 export const getNotifications = createAsyncThunk<
   Notification[],
   undefined,
-  { rejectValue: FetchError }
+  { rejectValue: ServerError }
 >("/fetch/notifications", async (_, thunkApi) => {
   const res: { success: boolean; data: Notification[] } = await axios.get(
     "/notifications"

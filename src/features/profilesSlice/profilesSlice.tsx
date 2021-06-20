@@ -1,20 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { UserProfile, ProfilesInitialState } from "./profilesSlice.types";
-import { FetchError } from "types";
+import { ServerError, User } from "types";
 const initialState: ProfilesInitialState = {
   profiles: {},
   status: "IDLE",
-  error: null,
 };
 
 export const getProfileByUsername = createAsyncThunk<
   UserProfile,
   { username: string },
-  { rejectValue: FetchError }
+  { rejectValue: ServerError }
 >("profiles/username", async ({ username }, thunkApi) => {
   const res: { success: boolean; data: UserProfile } = await axios.get(
-    `/profiles${username}`
+    `/profiles/${username}`
   );
   if (res.success) {
     return res.data;
@@ -27,7 +26,7 @@ export const getProfileByUsername = createAsyncThunk<
 export const updateFollowing = createAsyncThunk<
   string,
   { username: string },
-  { rejectValue: FetchError }
+  { rejectValue: ServerError }
 >("profiles/updateFollowing", async ({ username }, thunkApi) => {
   const res: {
     success: boolean;
@@ -49,7 +48,7 @@ export const updateProfile = createAsyncThunk<
     newImageUrl: string;
     newHeaderImageUrl: string;
   },
-  { rejectValue: FetchError }
+  { rejectValue: ServerError }
 >(
   "profiles/editProfile",
   async ({ newFullname, newBio, newImageUrl, newHeaderImageUrl }, thunkApi) => {
@@ -71,6 +70,40 @@ export const updateProfile = createAsyncThunk<
   }
 );
 
+export const getUserFollower = createAsyncThunk<
+  UserProfile,
+  { username: string },
+  { rejectValue: ServerError }
+>("profile/followers", async ({ username }, thunkApi) => {
+  const res: {
+    success: boolean;
+    data: UserProfile;
+  } = await axios.get(`/profiles/${username}/followers`);
+  if (res.success) {
+    return res.data;
+  }
+  return thunkApi.rejectWithValue({
+    error: "Failed",
+  });
+});
+
+export const getUserFollowing = createAsyncThunk<
+  User[],
+  { username: string },
+  { rejectValue: ServerError }
+>("profile/following", async ({ username }, thunkApi) => {
+  const res: {
+    success: boolean;
+    data: User[];
+  } = await axios.get(`/profiles/${username}/following`);
+  if (res.success) {
+    return res.data;
+  }
+  return thunkApi.rejectWithValue({
+    error: "Failed",
+  });
+});
+
 const profilesSlice = createSlice({
   name: "profiles",
   initialState,
@@ -83,7 +116,7 @@ const profilesSlice = createSlice({
     },
     profilePostLikeToogle: (state, { payload }) => {
       const { username, postId } = payload;
-      const exsitingPost = state.profiles[username].posts.find(
+      const exsitingPost = state.profiles[username].posts?.find(
         (post) => post._id === postId
       );
       if (exsitingPost && exsitingPost.currentUserLike) {
@@ -102,7 +135,6 @@ const profilesSlice = createSlice({
     builder.addCase(getProfileByUsername.fulfilled, (state, { payload }) => {
       state.profiles[payload.username] = payload;
       state.status = "FULFILLED";
-      state.error = null;
     });
     builder.addCase(getProfileByUsername.rejected, (state) => {
       state.status = "ERROR";
@@ -129,9 +161,35 @@ const profilesSlice = createSlice({
     builder.addCase(updateProfile.fulfilled, (state, { payload }) => {
       state.profiles[payload.username] = payload;
       state.status = "FULFILLED";
-      state.error = null;
     });
     builder.addCase(updateProfile.rejected, (state) => {
+      state.status = "ERROR";
+    });
+
+    builder.addCase(getUserFollower.pending, (state) => {
+      state.status = "PENDING";
+    });
+    builder.addCase(getUserFollower.fulfilled, (state, { meta, payload }) => {
+      const username = meta.arg.username;
+      if (username in state.profiles) {
+        state.profiles[username].followers = payload.followers;
+      } else {
+        state.profiles[username] = payload;
+      }
+      state.status = "FULFILLED";
+    });
+    builder.addCase(getUserFollower.rejected, (state) => {
+      state.status = "ERROR";
+    });
+
+    builder.addCase(getUserFollowing.pending, (state) => {
+      state.status = "PENDING";
+    });
+    builder.addCase(getUserFollowing.fulfilled, (state, { meta, payload }) => {
+      state.profiles[meta.arg.username].following = payload;
+      state.status = "FULFILLED";
+    });
+    builder.addCase(getUserFollowing.rejected, (state) => {
       state.status = "ERROR";
     });
   },

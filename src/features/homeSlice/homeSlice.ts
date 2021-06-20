@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FetchError } from "types";
+import { ServerError } from "types";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { HomeSliceInitialState, GetHomePostResponse } from "./homeSlice.types";
 import { Post } from "types";
@@ -12,7 +12,7 @@ const initialState: HomeSliceInitialState = {
 export const getHomePost = createAsyncThunk<
   Post[],
   undefined,
-  { rejectValue: FetchError }
+  { rejectValue: ServerError }
 >("home/fetch", async (_, thunkApi) => {
   const res: GetHomePostResponse = await axios.get("/posts");
   if (res.success) {
@@ -27,7 +27,7 @@ export const getHomePost = createAsyncThunk<
 export const uploadNewPost = createAsyncThunk<
   Post,
   { imageURL: string | null; title: string | null },
-  { rejectValue: FetchError }
+  { rejectValue: ServerError }
 >("posts/upload", async ({ imageURL, title }, thunkApi) => {
   const res: {
     data: Post;

@@ -1,6 +1,6 @@
 import "./profile.css";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   getProfileByUsername,
   setStatusIdle,
@@ -9,24 +9,26 @@ import {
 import { Spinner } from "components/Spinner";
 import { UserDetails } from "./UserDetails";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-
+import { Routes } from "react-router";
+import { ProtectedRoute } from "components/ProtectedRoute";
+import { Followers } from "./Followers";
+import { Following } from "./Following";
 export const Profile = (): JSX.Element => {
-  const { pathname } = useLocation();
-  const username = pathname.slice(1);
+  const { username } = useParams();
 
   const { profiles, status } = useAppSelector((state) => state.profiles);
   const appDispatch = useAppDispatch();
 
   useEffect(() => {
     (async () => {
-      if (status === "IDLE" && !(username in profiles)) {
-        appDispatch(getProfileByUsername({ username: pathname }));
+      if (status === "IDLE" && !profiles[username]) {
+        appDispatch(getProfileByUsername({ username }));
       }
-      if (status === "IDLE" && username in profiles) {
+      if (status === "IDLE" && profiles[username]) {
         appDispatch(setStatusFulfilled());
       }
     })();
-  }, [pathname, status, appDispatch, profiles, username]);
+  }, [status, appDispatch, profiles, username]);
 
   useEffect(() => {
     return () => {
@@ -36,24 +38,31 @@ export const Profile = (): JSX.Element => {
 
   return (
     <>
-      <section className="border-right">
-        <div className="border-bottom position-sticky top-0 bg-white padding-8 padding-l-16">
-          <h2 className="bold">Profile</h2>
+      {status === "PENDING" && <Spinner />}
+      {status === "FULFILLED" && profiles[username] && (
+        <Routes>
+          <ProtectedRoute
+            path="/"
+            element={
+              <UserDetails userProfile={profiles[username]} />
+            }></ProtectedRoute>
+          <ProtectedRoute
+            path="/followers"
+            element={
+              <Followers followers={profiles[username].followers} />
+            }></ProtectedRoute>
+          <ProtectedRoute
+            path="/following"
+            element={
+              <Following following={profiles[username].following} />
+            }></ProtectedRoute>
+        </Routes>
+      )}
+      {status === "ERROR" && (
+        <div className="row justify-center">
+          <h2 className="margin-t-64">This account doesn’t exist</h2>
         </div>
-        {status === "PENDING" && (
-          <div className="margin-64">
-            <Spinner />
-          </div>
-        )}
-        {status === "FULFILLED" && profiles[username] && (
-          <UserDetails userProfile={profiles[username]} />
-        )}
-        {status === "ERROR" && (
-          <div className="row justify-center">
-            <h2 className="margin-t-64">This account doesn’t exist</h2>
-          </div>
-        )}
-      </section>
+      )}
     </>
   );
 };

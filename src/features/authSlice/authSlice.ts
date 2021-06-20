@@ -2,7 +2,7 @@ import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { InitialState, res } from "./types";
 
-import { FetchError } from "types";
+import { ServerError } from "types";
 const initialState: InitialState = {
   currentUser: null,
   status: "IDLE",
@@ -13,7 +13,7 @@ const initialState: InitialState = {
 export const loginUser = createAsyncThunk<
   res,
   { email: string; password: string },
-  { rejectValue: FetchError }
+  { rejectValue: ServerError }
 >("user/loginUser", async ({ email, password }, thunkApi) => {
   const res: { success: boolean; data: res } = await axios.post(
     "/users/login",
@@ -35,7 +35,7 @@ export const loginUser = createAsyncThunk<
 export const initializeUser = createAsyncThunk<
   res,
   undefined,
-  { rejectValue: FetchError }
+  { rejectValue: ServerError }
 >("user/InitialUser", async (_, thunkApi) => {
   const res: { success: boolean; data: res } = await axios.get("/users/self");
 

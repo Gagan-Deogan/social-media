@@ -18,6 +18,6 @@ export type UserProfile = {
   followers: User[];
   followersLength: number;
   followingLength: number;
-  posts: Post[];
+  posts?: Post[];
   isFollow: boolean;
 };

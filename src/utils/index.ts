@@ -6,3 +6,4 @@ export {
   isValidImage,
   UploadImageToBucket,
 } from "./image.utils";
+export { CheckPasswordStrength } from "./CheckPasswordStrength";

@@ -1,10 +1,12 @@
-import { InitialState, Action } from "./type";
+import { InitialState, Action } from "./signup.types";
 export const initialState: InitialState = {
   fullname: "",
   username: "",
   email: "",
   password: "",
   confirmPassword: "",
+  status: "IDLE",
+  error: "",
 };
 
 export const reducer = (state: InitialState, action: Action) => {
@@ -19,5 +21,9 @@ export const reducer = (state: InitialState, action: Action) => {
       return { ...state, password: action.payload };
     case "SET_CONFIRM_PASSWORD":
       return { ...state, confirmPassword: action.payload };
+    case "SET_STATUS":
+      return { ...state, status: action.payload };
+    case "SET_ERROR":
+      return { ...state, error: action.payload };
   }
 };

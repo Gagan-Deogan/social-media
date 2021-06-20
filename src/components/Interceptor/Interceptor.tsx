@@ -27,19 +27,19 @@ export const Interceptor = () => {
           if (status === 403) {
             navigate("/login");
             appDispatch(logout());
-            return Promise.reject(error.data);
+            return Promise.reject(error);
           }
           if (status === 422) {
             appDispatch(
-              showSnakbar({ type: "ALERT", message: error.response.data.data })
+              showSnakbar({ type: "ALERT", message: error.response.data.error })
             );
-            return Promise.reject(error.data);
+            return Promise.reject(error);
           }
         }
         appDispatch(
           showSnakbar({ type: "ALERT", message: "Something went wrong." })
         );
-        return Promise.reject(error.data);
+        return Promise.reject(error);
       }
     );
     setErrorInterceptor(errorInterceptor);
