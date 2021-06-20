@@ -16,7 +16,7 @@ const checkTypeOfSnakbar = (type: "ALERT" | "SUCCESS") => {
 };
 
 export const Snakbar = () => {
-  const { type, message } = useAppSelector((state) => state.snakbar);
+  const { type, message, isShow } = useAppSelector((state) => state.snakbar);
   const appDispatch = useAppDispatch();
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -31,13 +31,17 @@ export const Snakbar = () => {
   const snakbarType = checkTypeOfSnakbar(type);
 
   return (
-    <div className={snakbarType}>
-      {type === "SUCCESS" && <CheckIcon />}
-      {type === "ALERT" && <ErrorIcon />}
-      <h5>{message}</h5>
-      <button className="btn-link">
-        <CancelWhite />
-      </button>
-    </div>
+    <>
+      {isShow && (
+        <div className={snakbarType}>
+          {type === "SUCCESS" && <CheckIcon />}
+          {type === "ALERT" && <ErrorIcon />}
+          <h5>{message}</h5>
+          <button className="btn-link">
+            <CancelWhite />
+          </button>
+        </div>
+      )}
+    </>
   );
 };

@@ -6,6 +6,4 @@ export {
   profilePostLikeToogle,
   updateFollowing,
   updateProfile,
-  getUserFollower,
-  getUserFollowing,
 } from "./profilesSlice";

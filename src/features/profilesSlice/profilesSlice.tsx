@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { UserProfile, ProfilesInitialState } from "./profilesSlice.types";
-import { ServerError, User } from "types";
+import { ServerError } from "types";
 const initialState: ProfilesInitialState = {
   profiles: {},
   status: "IDLE",
