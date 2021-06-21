@@ -31,7 +31,7 @@ export const Signup = () => {
     }
   };
 
-  const isPasswordStrong = CheckPasswordStrength(password);
+  const isPasswordStrong = password && CheckPasswordStrength(password);
   const bothPasswordsMatch =
     !!password && !!confirmPassword && password === confirmPassword;
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,7 +41,7 @@ export const Signup = () => {
       fullname &&
       username &&
       password &&
-      !bothPasswordsMatch &&
+      bothPasswordsMatch &&
       isPasswordStrong
     ) {
       dispatch({ type: "SET_STATUS", payload: "PENDING" });
@@ -112,7 +112,7 @@ export const Signup = () => {
                 dispatch({ type: "SET_PASSWORD", payload: e.target.value })
               }
               value={password}
-              error={!isPasswordStrong ? "Password is not Strong" : ""}
+              error={isPasswordStrong ? "" : "Password is not Strong"}
             />
           </div>
         </section>

@@ -32,16 +32,14 @@ export const Snakbar = () => {
 
   return (
     <>
-      {isShow && (
-        <div className={snakbarType}>
-          {type === "SUCCESS" && <CheckIcon />}
-          {type === "ALERT" && <ErrorIcon />}
-          <h5>{message}</h5>
-          <button className="btn-link">
-            <CancelWhite />
-          </button>
-        </div>
-      )}
+      <div className={snakbarType}>
+        {type === "SUCCESS" && <CheckIcon />}
+        {type === "ALERT" && <ErrorIcon />}
+        <h5>{message}</h5>
+        <button className="btn-link" onClick={() => appDispatch(hideSnakbar())}>
+          <CancelWhite />
+        </button>
+      </div>
     </>
   );
 };

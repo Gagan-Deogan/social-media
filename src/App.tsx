@@ -9,6 +9,7 @@ import { Navigation } from "components/Navigation";
 import { initializeUser } from "features/authSlice";
 const App = () => {
   const { currentUser, token } = useAppSelector((state) => state.auth);
+  const { isShow } = useAppSelector((state) => state.snakbar);
   const appDispatch = useAppDispatch();
   setupDefaultsHeader(token);
 
@@ -23,7 +24,7 @@ const App = () => {
   return (
     <>
       <Interceptor />
-      <Snakbar />
+      {isShow && <Snakbar />}
       <main className={mainLayout}>
         {currentUser && <Navbar />}
         <Navigation />
