@@ -1,0 +1,11 @@
+.loggedin-layout {
+  grid-template-columns: 1fr 3fr;
+  max-width: 62rem;
+  margin: auto;
+  min-height: 100vh;
+}
+@media (max-width: 600px) {
+  .loggedin-layout {
+    grid-template-columns: 1fr;
+  }
+}
