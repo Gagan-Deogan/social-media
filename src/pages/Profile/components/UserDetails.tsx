@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { Avatar } from "components/Avatar";
+import { Avatar } from "common-components/Avatar";
 import { UserProfile } from "types";
 import { useNavigate } from "react-router-dom";
-import { PostCard } from "components/PostCard";
-import { Modal } from "components/Modal";
+import { PostCard } from "common-components/PostCard";
+import { Modal } from "common-components/Modal";
 import { updatePostLike } from "services";
 import { profilePostLikeToogle, updateFollowing } from "features/profilesSlice";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { EditProfile } from "./EditProfile";
 import { debounce } from "utils";
 import { logout } from "features/authSlice";
+import { GenericSection } from "common-components/GenericSection";
 
 export const UserDetails = ({ userProfile }: { userProfile: UserProfile }) => {
   const navigate = useNavigate();
@@ -49,10 +50,7 @@ export const UserDetails = ({ userProfile }: { userProfile: UserProfile }) => {
 
   return (
     <>
-      <section className="border-right">
-        <div className="border-bottom position-sticky top-0 bg-white padding-8 padding-l-16">
-          <h2 className="bold">Profile</h2>
-        </div>
+      <GenericSection title="Profile">
         <div className="header-image-container position-relative bg-grey">
           {headerImageURL && (
             <img
@@ -134,7 +132,7 @@ export const UserDetails = ({ userProfile }: { userProfile: UserProfile }) => {
             imageURL={imageURL}
             handleClose={setToogleModel}></EditProfile>
         </Modal>
-      </section>
+      </GenericSection>
     </>
   );
 };

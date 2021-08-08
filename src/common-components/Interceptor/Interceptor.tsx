@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "app/hooks";
 import { logout } from "features/authSlice";
@@ -7,12 +7,10 @@ import { showSnakbar } from "features/snakbarSlice";
 export const Interceptor = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
-  const [errorInterceptor, setErrorInterceptor] = useState<number | undefined>(
-    undefined
-  );
+  const errorInterceptor = useRef<number | undefined>(undefined);
 
-  const addErrorInterceptor = () => {
-    const errorInterceptor = axios.interceptors.response.use(
+  const addErrorInterceptor = useCallback(() => {
+    errorInterceptor.current = axios.interceptors.response.use(
       (res) => {
         if (res.status === 201) {
           appDispatch(
@@ -29,12 +27,7 @@ export const Interceptor = () => {
             appDispatch(logout());
             return Promise.reject(error);
           }
-          if (status === 422) {
-            appDispatch(
-              showSnakbar({ type: "ALERT", message: error.response.data.error })
-            );
-            return Promise.reject(error);
-          }
+          return Promise.reject(error);
         }
         appDispatch(
           showSnakbar({ type: "ALERT", message: "Something went wrong." })
@@ -42,13 +35,12 @@ export const Interceptor = () => {
         return Promise.reject(error);
       }
     );
-    setErrorInterceptor(errorInterceptor);
-  };
+  }, [appDispatch, navigate]);
 
   const removeErrorInterceptor = () => {
-    if (errorInterceptor) {
-      axios.interceptors.request.eject(errorInterceptor);
-      setErrorInterceptor(undefined);
+    if (errorInterceptor.current) {
+      axios.interceptors.request.eject(errorInterceptor.current);
+      errorInterceptor.current = undefined;
     }
   };
 
@@ -57,6 +49,6 @@ export const Interceptor = () => {
     return () => {
       removeErrorInterceptor();
     };
-  }, []);
+  }, [addErrorInterceptor]);
   return <></>;
 };

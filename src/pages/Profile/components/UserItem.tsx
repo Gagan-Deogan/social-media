@@ -1,5 +1,5 @@
 import { User } from "types";
-import { Avatar } from "components/Avatar";
+import { Avatar } from "common-components/Avatar";
 export const UserItem = ({ user }: { user: User }) => {
   const { imageURL, fullname, username } = user;
   return (

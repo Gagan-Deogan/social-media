@@ -1,12 +1,11 @@
 import { User } from "types";
 import { UserItem } from "./UserItem";
+import { GenericSection } from "common-components/GenericSection";
+
 export const Following = ({ following }: { following: User[] }) => {
   return (
     <>
-      <section className="border-right">
-        <div className="border-bottom position-sticky top-0 bg-white padding-8 padding-l-16">
-          <h2 className="bold">Following</h2>
-        </div>
+      <GenericSection title="Following">
         {following.map((follow) => (
           <UserItem user={follow} />
         ))}
@@ -15,7 +14,7 @@ export const Following = ({ following }: { following: User[] }) => {
             <h2 className="margin-t-64 bold">No Following Found!</h2>
           </div>
         )}
-      </section>
+      </GenericSection>
     </>
   );
 };

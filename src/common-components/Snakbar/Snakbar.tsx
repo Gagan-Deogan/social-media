@@ -16,7 +16,7 @@ const checkTypeOfSnakbar = (type: "ALERT" | "SUCCESS") => {
 };
 
 export const Snakbar = () => {
-  const { type, message, isShow } = useAppSelector((state) => state.snakbar);
+  const { type, message } = useAppSelector((state) => state.snakbar);
   const appDispatch = useAppDispatch();
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -26,7 +26,7 @@ export const Snakbar = () => {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, []);
+  }, [appDispatch]);
 
   const snakbarType = checkTypeOfSnakbar(type);
 

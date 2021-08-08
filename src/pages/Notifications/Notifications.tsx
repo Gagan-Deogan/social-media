@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { RefreshIcon } from "assests/icons";
 import { useAppSelector, useAppDispatch } from "app/hooks";
+import { GenericSection } from "common-components/GenericSection";
 import {
   getNotifications,
   refreshNotification,
@@ -22,20 +23,17 @@ export const Notifications = () => {
   const handleRefresh = () => {
     appDispatch(refreshNotification());
   };
-  const betterHandleRefresh = debounce(handleRefresh, 500);
+  const betterHandleRefresh = debounce(handleRefresh, 300);
   return (
     <>
-      <section className="border-right">
-        <div className="row justify-between align-center border-bottom position-sticky top-0 bg-white padding-8 padding-l-16 padding-r-16">
-          <h2 className="bold">Notifications</h2>
-          <button className="btn-link" onClick={betterHandleRefresh}>
-            <RefreshIcon />
-          </button>
-        </div>
+      <GenericSection title="Notifications" onRefresh={betterHandleRefresh}>
         {notifications.map((notification) => (
-          <NotificationItem notification={notification} />
+          <NotificationItem
+            notification={notification}
+            key={notification._id}
+          />
         ))}
-      </section>
+      </GenericSection>
     </>
   );
 };

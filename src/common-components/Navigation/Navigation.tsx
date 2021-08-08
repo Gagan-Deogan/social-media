@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { ProtectedRoute } from "components/ProtectedRoute";
+import { ProtectedRoute } from "common-components/ProtectedRoute";
 import { Home } from "pages/Home";
 import { Notifications } from "pages/Notifications";
 import { Search } from "pages/Search";

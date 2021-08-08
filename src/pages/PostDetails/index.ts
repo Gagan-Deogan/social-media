@@ -1,1 +1,0 @@
-import { PostDetails } from "./PostDetails";

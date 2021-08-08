@@ -1,10 +1,10 @@
 import React, { useReducer, useRef } from "react";
 import { CancelIcon, CameraIcon } from "assests/icons";
 import { EditProfileProps, EditReducerInitialState } from "./editProfile.types";
-import { Avatar } from "components/Avatar";
+import { Avatar } from "common-components/Avatar";
 import { reducer } from "./editProfile.reducer";
 import { useAppDispatch } from "app/hooks";
-import { Spinner } from "components/Spinner";
+import { Spinner } from "common-components/Spinner";
 import { updateProfile } from "features/profilesSlice";
 import { UploadImageToBucket } from "utils";
 export const EditProfile = ({

@@ -6,13 +6,13 @@ import {
   setStatusIdle,
   setStatusFulfilled,
 } from "features/profilesSlice";
-import { Spinner } from "components/Spinner";
-import { UserDetails } from "./UserDetails";
+import { Spinner } from "common-components/Spinner";
+import { UserDetails } from "./components/UserDetails";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Routes } from "react-router";
-import { ProtectedRoute } from "components/ProtectedRoute";
-import { Followers } from "./Followers";
-import { Following } from "./Following";
+import { ProtectedRoute } from "common-components/ProtectedRoute";
+import { Followers } from "./components/Followers";
+import { Following } from "./components/Following";
 export const Profile = (): JSX.Element => {
   const { username } = useParams();
 
@@ -34,7 +34,7 @@ export const Profile = (): JSX.Element => {
     return () => {
       appDispatch(setStatusIdle());
     };
-  }, []);
+  }, [appDispatch]);
 
   return (
     <>

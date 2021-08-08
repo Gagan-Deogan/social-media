@@ -1,13 +1,13 @@
 import { useReducer } from "react";
-import { Input } from "components/Input";
-import { PasswordInput } from "components/PasswordInput";
+import { Input } from "common-components/Input";
+import { PasswordInput } from "common-components/PasswordInput";
 import { initialState, reducer } from "./reducer";
 import { signUp } from "./signup.service";
 import { useNavigate } from "react-router";
 import { CheckPasswordStrength } from "utils";
 export const Signup = () => {
   const [
-    { email, fullname, username, password, confirmPassword, status, error },
+    { email, fullname, username, password, confirmPassword, error },
     dispatch,
   ] = useReducer(reducer, initialState);
   const navigate = useNavigate();

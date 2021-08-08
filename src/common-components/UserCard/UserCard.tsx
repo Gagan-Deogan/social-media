@@ -1,8 +1,8 @@
-import { Avatar } from "components/Avatar";
+import { Avatar } from "common-components/Avatar";
 import { User } from "types";
 import { CancelIcon } from "assests/icons";
 
-export const ResultCard = ({
+export const UserCard = ({
   user,
   handleRemove,
   handleNavigate,

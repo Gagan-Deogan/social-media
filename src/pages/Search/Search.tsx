@@ -5,8 +5,9 @@ import {
   addToRecent,
   setStatusIdle,
 } from "features/searchSlice";
-import { Spinner } from "components/Spinner";
-import { ResultCard } from "./ResultCard";
+import { Spinner } from "common-components/Spinner";
+import { UserCard } from "common-components/UserCard";
+import { Recents } from "./components/Recents";
 import { debounce } from "utils";
 import { User } from "types";
 import { useNavigate } from "react-router";
@@ -56,24 +57,18 @@ export const Search = () => {
         )}
         {status === "FULFILLED" &&
           users.map((user) => (
-            <ResultCard
+            <UserCard
               user={user}
               key={user._id}
               handleNavigate={handleNavigate}
             />
           ))}
         {status === "IDLE" && !!recents.length && (
-          <div>
-            <h3 className="margin-8">Recent</h3>
-            {recents.map((user) => (
-              <ResultCard
-                key={user._id}
-                user={user}
-                handleNavigate={handleNavigate}
-                handleRemove={handleRemove}
-              />
-            ))}
-          </div>
+          <Recents
+            recents={recents}
+            handleNavigate={handleNavigate}
+            handleRemove={handleRemove}
+          />
         )}
         {status === "ERROR" && (
           <div className="text-center margin-t-64">
