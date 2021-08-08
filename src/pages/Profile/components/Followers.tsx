@@ -12,7 +12,11 @@ export const Followers = ({ followers }: { followers: User[] }) => {
       <GenericSection title="Followers">
         <ul>
           {followers.map((follower) => (
-            <UserCard user={follower} handleNavigate={handleNavigate} />
+            <UserCard
+              user={follower}
+              key={follower._id}
+              handleNavigate={handleNavigate}
+            />
           ))}
         </ul>
         {!followers.length && (

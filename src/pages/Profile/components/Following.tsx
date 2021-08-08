@@ -7,7 +7,7 @@ export const Following = ({ following }: { following: User[] }) => {
     <>
       <GenericSection title="Following">
         {following.map((follow) => (
-          <UserItem user={follow} />
+          <UserItem user={follow} key={follow._id} />
         ))}
         {!following.length && (
           <div className="row justify-center">

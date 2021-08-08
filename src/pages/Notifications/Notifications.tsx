@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { RefreshIcon } from "assests/icons";
 import { useAppSelector, useAppDispatch } from "app/hooks";
 import { GenericSection } from "common-components/GenericSection";
 import {
