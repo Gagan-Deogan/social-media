@@ -1,6 +1,9 @@
 import { InitialState, Action } from "./types";
 
-export const initialState: InitialState = { email: "", password: "" };
+export const initialState: InitialState = {
+  email: "Gagan@gmail.com",
+  password: "Gagan@123",
+};
 
 export const reducer = (state: InitialState, action: Action) => {
   switch (action.type) {

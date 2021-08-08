@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ImageIcon, SendIcon } from "assests/icons";
-import { Avatar } from "components/Avatar";
-import { Spinner } from "components/Spinner";
+import { Avatar } from "common-components/Avatar";
+import { Spinner } from "common-components/Spinner";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { showSnakbar } from "features/snakbarSlice";
 import {

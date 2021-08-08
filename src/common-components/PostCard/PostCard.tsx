@@ -1,6 +1,6 @@
 import "./post.css";
 import { Post as PostProps } from "types";
-import { Avatar } from "components/Avatar";
+import { Avatar } from "common-components/Avatar";
 import { LikedIcon, LikeIcon } from "assests/icons";
 import { debounce } from "utils";
 import { useNavigate } from "react-router";

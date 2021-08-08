@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { VisibleIcon, VisibleOffIcon } from "assests/icons";
-import { Input } from "components/Input";
+import { Input } from "common-components/Input";
 import { PasswordInputProps } from "types";
 export const PasswordInput = ({
   name,

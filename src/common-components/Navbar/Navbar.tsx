@@ -1,6 +1,6 @@
 import { UserIcon, HomeIcon, SeacrhIcon, BellIcon } from "assests/icons";
 import { NavLink } from "react-router-dom";
-import { Hidden } from "components/Hidden";
+import { Hidden } from "common-components/Hidden";
 import { useAppSelector } from "app/hooks";
 
 const navOptions = {

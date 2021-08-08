@@ -1,13 +1,13 @@
 import { useReducer } from "react";
-import { Input } from "components/Input";
-import { PasswordInput } from "components/PasswordInput";
+import { Input } from "common-components/Input";
+import { PasswordInput } from "common-components/PasswordInput";
 import { initialState, reducer } from "./reducer";
 import { signUp } from "./signup.service";
 import { useNavigate } from "react-router";
 import { CheckPasswordStrength } from "utils";
 export const Signup = () => {
   const [
-    { email, fullname, username, password, confirmPassword, status, error },
+    { email, fullname, username, password, confirmPassword, error },
     dispatch,
   ] = useReducer(reducer, initialState);
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export const Signup = () => {
     }
   };
 
-  const isPasswordStrong = CheckPasswordStrength(password);
+  const isPasswordStrong = password && CheckPasswordStrength(password);
   const bothPasswordsMatch =
     !!password && !!confirmPassword && password === confirmPassword;
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,7 +41,7 @@ export const Signup = () => {
       fullname &&
       username &&
       password &&
-      !bothPasswordsMatch &&
+      bothPasswordsMatch &&
       isPasswordStrong
     ) {
       dispatch({ type: "SET_STATUS", payload: "PENDING" });
@@ -112,7 +112,7 @@ export const Signup = () => {
                 dispatch({ type: "SET_PASSWORD", payload: e.target.value })
               }
               value={password}
-              error={!isPasswordStrong ? "Password is not Strong" : ""}
+              error={isPasswordStrong ? "" : "Password is not Strong"}
             />
           </div>
         </section>

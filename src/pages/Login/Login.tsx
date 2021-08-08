@@ -2,9 +2,9 @@ import "./login.css";
 import wall from "assests/images/wall.jpg";
 import React, { useReducer, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Input } from "components/Input";
+import { Input } from "common-components/Input";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { PasswordInput } from "components/PasswordInput";
+import { PasswordInput } from "common-components/PasswordInput";
 import { loginUser } from "features/authSlice/authSlice";
 import { initialState, reducer } from "./reducer";
 type State = { from: string } | null;
@@ -24,7 +24,7 @@ export const Login = () => {
         navigate("/home");
       }
     }
-  }, [currentUser, navigate]);
+  }, [currentUser, navigate, state]);
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();

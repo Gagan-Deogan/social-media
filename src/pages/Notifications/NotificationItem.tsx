@@ -1,4 +1,4 @@
-import { Avatar } from "components/Avatar";
+import { Avatar } from "common-components/Avatar";
 import { Notification } from "features/notificationsSlice/notifications.type";
 
 export const NotificationItem = ({
@@ -9,7 +9,6 @@ export const NotificationItem = ({
   const { sourceUser, text } = notification;
   const post =
     notification.notificationType === "LIKE" ? notification.post : null;
-  console.log(post);
   return (
     <article className="border-bottom padding-16 row align-center justify-between">
       <div className="row">
