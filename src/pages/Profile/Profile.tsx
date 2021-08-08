@@ -10,7 +10,7 @@ import { Spinner } from "common-components/Spinner";
 import { UserDetails } from "./components/UserDetails";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Routes } from "react-router";
-import { ProtectedRoute } from "common-components/ProtectedRoute";
+import { BetterRoute } from "common-components/BetterRoute";
 import { Followers } from "./components/Followers";
 import { Following } from "./components/Following";
 export const Profile = (): JSX.Element => {
@@ -41,21 +41,24 @@ export const Profile = (): JSX.Element => {
       {status === "PENDING" && <Spinner />}
       {status === "FULFILLED" && profiles[username] && (
         <Routes>
-          <ProtectedRoute
+          <BetterRoute
+            type="PROTECTED"
             path="/"
             element={
               <UserDetails userProfile={profiles[username]} />
-            }></ProtectedRoute>
-          <ProtectedRoute
+            }></BetterRoute>
+          <BetterRoute
+            type="PROTECTED"
             path="/followers"
             element={
               <Followers followers={profiles[username].followers} />
-            }></ProtectedRoute>
-          <ProtectedRoute
+            }></BetterRoute>
+          <BetterRoute
+            type="PROTECTED"
             path="/following"
             element={
               <Following following={profiles[username].following} />
-            }></ProtectedRoute>
+            }></BetterRoute>
         </Routes>
       )}
       {status === "ERROR" && (

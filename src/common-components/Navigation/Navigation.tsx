@@ -1,21 +1,25 @@
 import { Routes, Route } from "react-router-dom";
-import { ProtectedRoute } from "common-components/ProtectedRoute";
 import { Home } from "pages/Home";
 import { Notifications } from "pages/Notifications";
 import { Search } from "pages/Search";
 import { Profile } from "pages/Profile";
 import { Signup } from "pages/Signup";
 import { Login } from "pages/Login";
+import { BetterRoute } from "common-components/BetterRoute";
 export const Navigation = () => {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <ProtectedRoute path="/home" element={<Home />} />
-      <ProtectedRoute path="/search" element={<Search />} />
-      <ProtectedRoute path="/notifications" element={<Notifications />} />
-      <ProtectedRoute path="/profile" element={<Profile />} />
-      <ProtectedRoute path="/:username/*" element={<Profile />} />
+      <BetterRoute type="PUBLIC-ONLY" path="/" element={<Login />} />
+      <BetterRoute type="PUBLIC-ONLY" path="/signup" element={<Signup />} />
+      <BetterRoute type="PROTECTED" path="/home" element={<Home />} />
+      <BetterRoute type="PROTECTED" path="/search" element={<Search />} />
+      <BetterRoute
+        type="PROTECTED"
+        path="/notifications"
+        element={<Notifications />}
+      />
+      <BetterRoute type="PROTECTED" path="/profile" element={<Profile />} />
+      <BetterRoute type="PROTECTED" path="/:username/*" element={<Profile />} />
     </Routes>
   );
 };
